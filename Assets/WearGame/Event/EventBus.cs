@@ -7,7 +7,6 @@ using UnityEngine;
 /// </summary>
 public static class EventBus
 {
-    //イベントとメソッドのリスト の辞書
     private static readonly Dictionary<Type, List<Delegate>> _eventDic = new Dictionary<Type, List<Delegate>>();
     private static readonly Dictionary<object, List<MemorizeEvent>> _ownerDic = new Dictionary<object, List<MemorizeEvent>>();
 
