@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using UnityEngine;
 
 /// <summary>
 /// 全てのイベントの購読・解除・発火を司るクラス
@@ -16,7 +15,7 @@ public static class EventBus
     /// <typeparam name="T"></typeparam>
     /// <param name="owner"></param>
     /// <param name="action"></param>
-    public static void Subscribe<T>(object owner, Action<T> action) where T :  IGameEvent
+    public static void Subscribe<T>(object owner, Action<T> action) where T : struct, IGameEvent
     {
         Type type = typeof(T);
         if (!_eventDic.TryGetValue(type, out List<Delegate> list))
@@ -38,7 +37,7 @@ public static class EventBus
     /// </summary>
     /// <typeparam name="T"></typeparam>
     /// <param name="owner"></param>
-    public static void UnSubscribe<T>(Action<T> action) where T :  IGameEvent
+    public static void UnSubscribe<T>(Action<T> action) where T : struct, IGameEvent
     {
         Type type = typeof(T);
         if (_eventDic.TryGetValue(type, out List<Delegate> list))
@@ -49,7 +48,7 @@ public static class EventBus
             {
                 _eventDic.Remove(type);
             }
-        }      
+        }
     }
 
     /// <summary>
@@ -81,7 +80,7 @@ public static class EventBus
     /// </summary>
     /// <typeparam name="T"></typeparam>
     /// <param name="ev"></param>
-    public static void Publish<T>(T ev) where T : ScriptableObject, IGameEvent
+    public static void Publish<T>(T ev) where T : struct, IGameEvent
     {
         Type t = typeof(T);
         if (_eventDic.TryGetValue(t, out List<Delegate> list))

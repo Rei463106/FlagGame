@@ -1,12 +1,26 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.Pool;
 
-internal abstract class PrefabPool : MonoBehaviour
+internal class R_PrefabPool : MonoBehaviour
 {
     [Header("Prefab")]
     [SerializeField] private GameObject _prefab;
-    protected ObjectPool<GameObject> _pool;
+
+    private ObjectPool<GameObject> _pool;
     private GameObject _currentObject;
+
+    private void OnEnable()
+    {
+        EventBus.Subscribe<ClickStart>(this, OnGet);
+        EventBus.Subscribe<ClickInsideFinish>(this, OnRelease);
+        EventBus.Subscribe<ClickOutsideFinish>(this, OnRelease);
+    }
+
+    private void OnDisable()
+    {
+        EventBus.AllUnSubscribe(this);
+    }
 
     private void Start()
     {
@@ -29,7 +43,8 @@ internal abstract class PrefabPool : MonoBehaviour
     private void OnGetFromPool(GameObject obj)
     {
         obj.SetActive(true);
-        obj.GetComponent<SpriteRenderer>().enabled = false;//最初見た目を透明にする
+        
+        //obj.GetComponent<SpriteRenderer>().enabled = false;//最初見た目を透明にする
     }
 
     //プールに戻す
@@ -44,12 +59,21 @@ internal abstract class PrefabPool : MonoBehaviour
         Destroy(obj);
     }
 
-    private void OnGet()
+    private void OnGet(ClickStart c)
     {
         _currentObject = _pool.Get();//生成したものの情報が入る
+        var mouse = Camera.main.ScreenToWorldPoint(Mouse.current.position.ReadValue());
+        Vector2 mousePos = new Vector2(mouse.x, mouse.y);
+        _currentObject.transform.position = mousePos;
+        Debug.Log(mousePos);
     }
 
-    private void OnRelease()
+    private void OnRelease(ClickInsideFinish c)
+    {
+        _pool.Release(_currentObject);
+    }
+
+    private void OnRelease(ClickOutsideFinish c)
     {
         _pool.Release(_currentObject);
     }
