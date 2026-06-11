@@ -6,15 +6,18 @@ using UnityEngine.InputSystem;
 /// </summary>
 public class R_ObjectSetting : MonoBehaviour
 {
+    [Header("自分自身")]
+    [SerializeField] private GameObject _myObject;
+
     private D_ObjectSetting _setting;
+
     private void Start()
     {
-        _setting = new D_ObjectSetting();     
+        _setting = new D_ObjectSetting(_myObject);
     }
 
     public void DragMouse()
     {
-        Debug.Log("ドラッグ");
         if (!_setting.IsDrag)
         {
             _setting.DragMouse();
@@ -23,6 +26,7 @@ public class R_ObjectSetting : MonoBehaviour
         {
             GetComponent<SpriteRenderer>().enabled = true;
         }
+
         var mouse = Camera.main.ScreenToWorldPoint(Mouse.current.position.ReadValue());
         Vector2 mousePos = new Vector2(mouse.x, mouse.y);
         transform.position = mousePos;
@@ -30,7 +34,7 @@ public class R_ObjectSetting : MonoBehaviour
 
     public void RevertMouse()
     {
-        // _setting.RevertMouse();
+        _setting.RevertMouse();
     }
 
     private void OnCollisionEnter2D(Collision2D collision)

@@ -1,6 +1,35 @@
 {
-    "version": 0,
+    "version": 1,
     "name": "InputCollection",
-    "maps": [],
+    "maps": [
+        {
+            "name": "PressMouse",
+            "id": "72d5213e-e396-4721-97bc-8e35f07653fc",
+            "actions": [
+                {
+                    "name": "MousePush",
+                    "type": "Button",
+                    "id": "73d9a971-bc9d-454f-b458-385b27cda8a4",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "42adc59e-351e-464d-a37d-634c6a822c7e",
+                    "path": "<Mouse>/leftButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "MousePush",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        }
+    ],
     "controlSchemes": []
 }

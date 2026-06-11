@@ -1,12 +1,20 @@
+using UnityEngine;
+
 /// <summary>
 /// Cloth本体の処理を記述するところ(データ)
 /// </summary>
 public class D_ObjectSetting
 {
+    private GameObject _myObject;
     private bool _isDrag;
     private bool _isIncollider;
 
     public bool IsDrag => _isDrag;
+
+    public D_ObjectSetting(GameObject myObject)
+    {
+        _myObject = myObject;
+    }
 
     /// <summary>
     /// 物体がドラッグされた時
@@ -14,6 +22,7 @@ public class D_ObjectSetting
     public void DragMouse()
     {
         _isDrag = true;
+        EventBus.Publish<DragGiveObject>(new DragGiveObject(_myObject));
     }
 
     /// <summary>
@@ -21,10 +30,11 @@ public class D_ObjectSetting
     /// </summary>
     public void RevertMouse()
     {
+        _isDrag = false;
         if (_isIncollider)
-            EventBus.Publish<ClickInsideFinish>(new ClickInsideFinish());
+            EventBus.Publish<ClickInsideFinish>(new ClickInsideFinish(_myObject));
         else
-            EventBus.Publish<ClickOutsideFinish>(new ClickOutsideFinish());
+            EventBus.Publish<ClickOutsideFinish>(new ClickOutsideFinish(_myObject));
     }
 
     /// <summary>
