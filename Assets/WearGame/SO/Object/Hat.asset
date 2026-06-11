@@ -10,8 +10,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: cd528348c818bd44baa50529e5cd3881, type: 3}
-  m_Name: Ribbon
+  m_Name: Hat
   m_EditorClassIdentifier: Assembly-CSharp::ClothItem
-  _name: "\u30EA\u30DC\u30F3"
+  _name: Hat
   _parts: 0
-  _sprite: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
+  _sprite: {fileID: 10901, guid: 0000000000000000f000000000000000, type: 0}
