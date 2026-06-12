@@ -49,7 +49,7 @@ public class R_ObjectSpawn : MonoBehaviour
     private void InitializeObject()
     {
         _oldPrefab = _currentPrefab;
-        _currentPrefab = _pool.Get();//生成したものの情報が入る
+        _currentPrefab = _pool.Get();
         _currentPrefab.GetComponent<SpriteRenderer>().sprite = _setting.Sprite;
         _prefabIDList.Add(_currentPrefab.GetInstanceID().ToString());
         _currentPrefab.transform.position = _spawnTransform.position;

@@ -7,7 +7,7 @@ public class D_ObjectSetting
 {
     private GameObject _myObject;
     private bool _isDrag;
-    private bool _isIncollider;
+    private bool _isInCollider;
 
     public bool IsDrag => _isDrag;
 
@@ -29,12 +29,13 @@ public class D_ObjectSetting
     /// マウスが離された時
     /// </summary>
     public void RevertMouse()
-    {
-        _isDrag = false;
-        if (_isIncollider)
+    {     
+        if (_isInCollider)
             EventBus.Publish<ClickInsideFinish>(new ClickInsideFinish(_myObject));
         else
             EventBus.Publish<ClickOutsideFinish>(new ClickOutsideFinish(_myObject));
+        _isDrag = false;
+        _isInCollider = false;
     }
 
     /// <summary>
@@ -42,7 +43,7 @@ public class D_ObjectSetting
     /// </summary>
     public void InCollision()
     {
-        _isIncollider = true;
+        _isInCollider = true;
     }
 
     /// <summary>
@@ -50,6 +51,6 @@ public class D_ObjectSetting
     /// </summary>
     public void OutCollision()
     {
-        _isIncollider = false;
+        _isInCollider = false;
     }
 }

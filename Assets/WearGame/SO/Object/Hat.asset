@@ -14,4 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ClothItem
   _name: Hat
   _parts: 0
-  _sprite: {fileID: 10901, guid: 0000000000000000f000000000000000, type: 0}
+  _sprite: {fileID: 21300000, guid: c4289c0ac590eff4fbecd2011b3aa751, type: 3}
