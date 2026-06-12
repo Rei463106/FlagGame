@@ -21,9 +21,6 @@ public class R_ObjectSetting : MonoBehaviour
         if (!_setting.IsDrag)
         {
             _setting.DragMouse();
-        }
-        else
-        {
             GetComponent<SpriteRenderer>().enabled = true;
         }
 
