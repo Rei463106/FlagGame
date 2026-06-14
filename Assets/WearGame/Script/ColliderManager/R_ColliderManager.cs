@@ -1,23 +1,26 @@
+using Cysharp.Threading.Tasks;
 using System;
 using System.Collections.Generic;
+using System.Threading;
 using UnityEngine;
 
 internal class R_ColliderManager : MonoBehaviour
 {
-    [Header("リスト")]
-    [SerializeField] private List<ColliderSetting> _settings = new List<ColliderSetting>();
+    [Header("対応表")]
+    [SerializeField] private TypeSetting[] _settings;
 
-    private Dictionary<Parts, Collider2D> _colliderDic = new Dictionary<Parts, Collider2D>();
+    private bool _isInSend;
+    private bool _isOutSend;
 
-    public Dictionary<Parts, Collider2D> ColliderDic => _colliderDic;
+    private Dictionary<Parts, GameObject> _colliderDic = new Dictionary<Parts, GameObject>();
+    private ClothItem _item;
+    private CancellationTokenSource _source;
+
     private void OnEnable()
     {
-        foreach (var s in _settings)
-        {
-            _colliderDic[s.Parts] = s.Collider;
-        }
-
-        EventBus.Subscribe<DragGiveSetting>(this, SubscribeSetting);
+        EventBus.Subscribe<DragGiveSettingEvent>(this, ReceiveDragSetting);
+        EventBus.Subscribe<ObjectInsideEvent>(this, ReceiveInside);
+        EventBus.Subscribe<ObjectOutsideEvent>(this, ReceiveOutside);
     }
 
     private void OnDisable()
@@ -25,30 +28,77 @@ internal class R_ColliderManager : MonoBehaviour
         EventBus.AllUnSubscribe(this);
     }
 
-    private void SubscribeSetting(DragGiveSetting s)
+    private void Start()
     {
-        foreach (var i in _colliderDic.Keys)
+        foreach (var pair in _settings)
         {
-            if (i == s.Setting.Parts)
+            _colliderDic[pair.Parts] = pair.Object;
+        }
+        _source = new CancellationTokenSource();
+        WaitUntilflag(_source.Token).Forget();
+    }
+
+    private void ReceiveDragSetting(DragGiveSettingEvent d)
+    {
+        _item = d.Setting;
+
+        Parts parts = Parts.Head;
+
+        foreach (var k in _colliderDic.Keys)
+        {
+            if (k == _item.Parts)
             {
-                _colliderDic[i].enabled = true;
+                _colliderDic[k].GetComponent<R_ColliderSetting>().ReceiveSettingInfo(_item);
+                _colliderDic[k].GetComponent<L_ColliderSetting>().ReceiveSettingInfo(_item);
+                parts = k;
+            }
+        }
+    }
+
+    private async UniTask WaitUntilflag(CancellationToken token)
+    {
+        while (!token.IsCancellationRequested)
+        {
+            await UniTask.WaitUntil(() => _isInSend || _isOutSend);
+
+            if (_isInSend)
+            {
+                _colliderDic[_item.Parts].GetComponent<SpriteRenderer>().sprite =
+                     _colliderDic[_item.Parts].GetComponent<L_ColliderSetting>().CurrentSprite;
             }
             else
             {
-                _colliderDic[i].enabled = false;
+                _colliderDic[_item.Parts].GetComponent<SpriteRenderer>().sprite =
+                     _colliderDic[_item.Parts].GetComponent<L_ColliderSetting>().OldSprite;
             }
+
+            _isInSend = false;
+            _isOutSend = false;
+            await UniTask.Yield();
         }
+    }
+
+    private void ReceiveInside(ObjectInsideEvent o)
+    {
+        _isInSend = true;
+    }
+
+    private void ReceiveOutside(ObjectOutsideEvent o)
+    {
+        _isOutSend = true;
     }
 }
 
 [Serializable]
-internal struct ColliderSetting
+internal struct TypeSetting
 {
-    [Header("タイプ")]
+    [Header("Parts")]
     [SerializeField] private Parts _parts;
-    [Header("Collider")]
-    [SerializeField] private Collider2D _collider;
+    [Header("GameObject")]
+    [SerializeField] private GameObject _object;
 
     public Parts Parts => _parts;
-    public Collider2D Collider => _collider;
+    public GameObject Object => _object;
 }
+
+

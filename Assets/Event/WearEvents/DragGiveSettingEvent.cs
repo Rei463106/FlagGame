@@ -3,11 +3,11 @@ using UnityEditor;
 #endif 
 using UnityEngine;
 
-internal readonly struct DragGiveSetting : IGameEvent
+internal readonly struct DragGiveSettingEvent : IGameEvent
 {
     public ClothItem Setting { get; }
 
-    public DragGiveSetting(ClothItem setting)
+    public DragGiveSettingEvent(ClothItem setting)
     {
         Setting = setting;
     }

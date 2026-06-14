@@ -1,63 +1,60 @@
-using Cysharp.Threading.Tasks;
-using System;
 using UnityEngine;
 
-public class L_ColliderSetting : MonoBehaviour
+internal class L_ColliderSetting : MonoBehaviour
 {
+    [Header("自分のパーツ")]
+    [SerializeField] private Parts _myParts;
+
+    private bool _isHide = true;
+    private ClothItem _item;
     private Sprite _currentSprite;
-    private bool _isExecute;
+    private Sprite _oldSprite;
+
+    public Sprite CurrentSprite => _currentSprite;
+    public Sprite OldSprite => _oldSprite;
 
     private void OnEnable()
     {
-        EventBus.Subscribe<DragGiveSetting>(this, ReceiveClothInfo);
-        EventBus.Subscribe<ClickInsideFinish>(this, ReceiveInsideInfo);
-        EventBus.Subscribe<ClickOutsideFinish>(this, ReceiveOutSideInfo);
-        GetComponent<SpriteRenderer>().sprite = null;
+        EventBus.Subscribe<DragGiveRevertEvent>(this, ReceiveMousePos);
     }
-
     private void OnDisable()
     {
         EventBus.AllUnSubscribe(this);
     }
 
-    private void ReceiveClothInfo(DragGiveSetting s)
+    /// <summary>
+    /// Managerから情報を受け取る
+    /// </summary>
+    public void ReceiveSettingInfo(ClothItem item)
     {
-        _currentSprite = s.Setting.Sprite;
+        _item = item;
+        _oldSprite = _currentSprite;
+        _currentSprite = _item.Sprite;
+        _isHide = false;
     }
 
-    private void ReceiveInsideInfo(ClickInsideFinish c)
+    private void ReceiveMousePos(DragGiveRevertEvent d)
     {
-        DelayFlag().Forget();
-    }
-
-    private void ReceiveOutSideInfo(ClickOutsideFinish c)
-    {
-        DelayFlag().Forget();
-    }
-
-    private async UniTask DelayFlag()
-    {
-        if (!_isExecute)
-        {
-            _isExecute = true;
-            //ここでイベ呼んでみる？
-        }
-        await UniTask.Delay(TimeSpan.FromSeconds(2f));
-        _isExecute = false;
+        _isHide = true;
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        collision.gameObject.GetComponent<SpriteRenderer>().enabled = false;
-        GetComponent<SpriteRenderer>().sprite = _currentSprite;
+        if (!_isHide)
+        {
+            collision.gameObject.GetComponent<SpriteRenderer>().enabled = false;
+            TryGetComponent<SpriteRenderer>(out var c);
+            c.sprite = _currentSprite;
+        }
     }
 
     private void OnTriggerExit2D(Collider2D collision)
     {
-        if (!_isExecute)
+        if (!_isHide)
         {
             collision.gameObject.GetComponent<SpriteRenderer>().enabled = true;
-            GetComponent<SpriteRenderer>().sprite = null;
+            TryGetComponent<SpriteRenderer>(out var c);
+            c.sprite = _oldSprite;
         }
     }
 }

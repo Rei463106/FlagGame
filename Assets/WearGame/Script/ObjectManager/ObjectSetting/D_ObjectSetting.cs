@@ -3,17 +3,20 @@ using UnityEngine;
 /// <summary>
 /// Cloth本体の処理を記述するところ(データ)
 /// </summary>
-public class D_ObjectSetting
+internal class D_ObjectSetting
 {
-    private GameObject _myObject;
-    private bool _isDrag;
-    private bool _isInCollider;
+    private ClothItem _myCloth;
+    private bool _isComplete;
 
-    public bool IsDrag => _isDrag;
+    public ClothItem MyClothSetting => _myCloth;
 
-    public D_ObjectSetting(GameObject myObject)
+    /// <summary>
+    /// 自分が何か設定する
+    /// </summary>
+    /// <param name="cloth"></param>
+    public void MyCloth(ClothItem cloth)
     {
-        _myObject = myObject;
+        _myCloth = cloth;
     }
 
     /// <summary>
@@ -21,36 +24,33 @@ public class D_ObjectSetting
     /// </summary>
     public void DragMouse()
     {
-        _isDrag = true;
-        EventBus.Publish<DragGiveObject>(new DragGiveObject(_myObject));
+        EventBus.Publish<DragGiveSettingEvent>(new DragGiveSettingEvent(_myCloth));
+    }
+
+    /// <summary>
+    /// マウスが離されるかどうか見張る
+    /// </summary>
+    /// <returns></returns>
+    public bool WaitUntilRevertMouse()
+    {
+        return _isComplete;
     }
 
     /// <summary>
     /// マウスが離された時
     /// </summary>
-    public void RevertMouse()
-    {     
-        if (_isInCollider)
-            EventBus.Publish<ClickInsideFinish>(new ClickInsideFinish(_myObject));
-        else
-            EventBus.Publish<ClickOutsideFinish>(new ClickOutsideFinish(_myObject));
-        _isDrag = false;
-        _isInCollider = false;
+    public void RevertMouse(Vector2 vector2)
+    {
+        EventBus.Publish<DragGiveRevertEvent>(new DragGiveRevertEvent());
+        EventBus.Publish<RevertMouseEvent>(new RevertMouseEvent(vector2));
+        _isComplete = true;//完了を知らせる
     }
 
     /// <summary>
-    /// コライダー内に入った時の処理
+    /// 値を元に戻してもらう
     /// </summary>
-    public void InCollision()
+    public void ReturnValue()
     {
-        _isInCollider = true;
-    }
-
-    /// <summary>
-    /// コライダーの外に出た時の処理
-    /// </summary>
-    public void OutCollision()
-    {
-        _isInCollider = false;
+        _isComplete = false;
     }
 }
