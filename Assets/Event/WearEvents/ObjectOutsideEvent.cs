@@ -5,10 +5,5 @@ using UnityEngine;
 /// </summary>
 public readonly struct ObjectOutsideEvent : IGameEvent
 {
-    public GameObject PrefabObject { get; }
-
-    public ObjectOutsideEvent(GameObject prefabObject)
-    {
-        PrefabObject = prefabObject;
-    }
+   
 }
