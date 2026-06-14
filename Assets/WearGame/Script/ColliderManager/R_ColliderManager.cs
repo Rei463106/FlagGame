@@ -41,16 +41,13 @@ internal class R_ColliderManager : MonoBehaviour
     private void ReceiveDragSetting(DragGiveSettingEvent d)
     {
         _item = d.Setting;
-
-        Parts parts = Parts.Head;
-
         foreach (var k in _colliderDic.Keys)
         {
             if (k == _item.Parts)
             {
                 _colliderDic[k].GetComponent<R_ColliderSetting>().ReceiveSettingInfo(_item);
                 _colliderDic[k].GetComponent<L_ColliderSetting>().ReceiveSettingInfo(_item);
-                parts = k;
+                break;
             }
         }
     }
