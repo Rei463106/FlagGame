@@ -4,43 +4,75 @@ using UnityEngine.InputSystem;
 /// <summary>
 /// Cloth本体の処理を記述するところ(ランタイム)
 /// </summary>
-public class R_ObjectSetting : MonoBehaviour
+internal class R_ObjectSetting : MonoBehaviour
 {
-    [Header("自分自身")]
-    [SerializeField] private GameObject _myObject;
-
+    private bool _isDrag;
     private D_ObjectSetting _setting;
 
-    private void Start()
+    private void Awake()
     {
-        _setting = new D_ObjectSetting(_myObject);
+        _setting = new D_ObjectSetting();
     }
 
+    /// <summary>
+    ///  マウスドラッグ時設定を渡す
+    /// </summary>
+    public void DragMouseForSetting()
+    {
+        if (!_isDrag)
+        {
+            _isDrag = true;
+            _setting.DragMouse();
+            if (TryGetComponent<SpriteRenderer>(out var c))
+            {
+                c.sprite = _setting.MyClothSetting.Sprite;
+                c.enabled = true;
+            }
+        }
+    }
+
+    /// <summary>
+    /// マウスドラッグ時
+    /// </summary>
     public void DragMouse()
     {
-        if (!_setting.IsDrag)
-        {
-            _setting.DragMouse();
-            GetComponent<SpriteRenderer>().enabled = true;
-        }
-
         var mouse = Camera.main.ScreenToWorldPoint(Mouse.current.position.ReadValue());
         Vector2 mousePos = new Vector2(mouse.x, mouse.y);
         transform.position = mousePos;
     }
 
+    /// <summary>
+    /// マウスを離した時
+    /// </summary>
     public void RevertMouse()
     {
-        _setting.RevertMouse();
+        _setting.RevertMouse(transform.position);
+        _isDrag = false;
     }
 
-    private void OnCollisionEnter2D(Collision2D collision)
+    /// <summary>
+    /// プール側に離されたか伝える用
+    /// </summary>
+    /// <returns></returns>
+    public bool WaitUntilRevertMouse()
     {
-        _setting.InCollision();
+        return _setting.WaitUntilRevertMouse();
     }
 
-    private void OnCollisionExit2D(Collision2D collision)
+    /// <summary>
+    /// プール側に設定してもらう用
+    /// </summary>
+    /// <param name="item"></param>
+    public void ReceiveSetting(ClothItem item)
     {
-        _setting.OutCollision();
+        _setting.MyCloth(item);
+    }
+
+    /// <summary>
+    /// プールに値を戻してもらう
+    /// </summary>
+    public void ReturnValue()
+    {
+        _setting.ReturnValue();
     }
 }

@@ -3,11 +3,11 @@ using UnityEngine;
 /// <summary>
 /// コライダーの中でマウスが離された時のイベント
 /// </summary>
-public readonly struct ClickInsideFinish : IGameEvent
+public readonly struct ObjectInsideEvent : IGameEvent
 {
     public GameObject PrefabObject { get; }
 
-    public ClickInsideFinish(GameObject prefabObject)
+    public ObjectInsideEvent(GameObject prefabObject)
     {
         PrefabObject = prefabObject;
     }

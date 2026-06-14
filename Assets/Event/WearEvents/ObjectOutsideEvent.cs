@@ -3,11 +3,11 @@ using UnityEngine;
 /// <summary>
 /// 外側でマウスを離した時のイベント
 /// </summary>
-public readonly struct ClickOutsideFinish : IGameEvent
+public readonly struct ObjectOutsideEvent : IGameEvent
 {
     public GameObject PrefabObject { get; }
 
-    public ClickOutsideFinish(GameObject prefabObject)
+    public ObjectOutsideEvent(GameObject prefabObject)
     {
         PrefabObject = prefabObject;
     }
