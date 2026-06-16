@@ -19,7 +19,7 @@ public class R_ModelSelecter : MonoBehaviour
     private void Start()
     {
         _selecter = new D_ModelSelecter(_list);
-        _selecter.SelectItem();
+        _selecter.SelectItemBase();
     }
 
     /// <summary>
@@ -27,7 +27,7 @@ public class R_ModelSelecter : MonoBehaviour
     /// </summary>
     public void DustBox()
     {
-        _selecter.SelectItem();
+        _selecter.SelectItemDust();
     }
 
     /// <summary>
@@ -36,6 +36,6 @@ public class R_ModelSelecter : MonoBehaviour
     /// <param name="c"></param>
     public void RenewalItem(CorrectEvent c)
     {
-        _selecter.SelectItem();
+        _selecter.SelectItemDust();
     }
 }

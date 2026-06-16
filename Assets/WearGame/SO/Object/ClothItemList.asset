@@ -17,6 +17,7 @@ MonoBehaviour:
     _setttings:
     - {fileID: 11400000, guid: 11c75080b0601b448b673ae131d48380, type: 2}
     - {fileID: 11400000, guid: e7a6cb782431b6645a7d50a2bec66d55, type: 2}
+    - {fileID: 11400000, guid: 23589e49882401642b531c4b39c404e9, type: 2}
   - _parts: 1
     _setttings:
     - {fileID: 11400000, guid: bfb29a3fc88229441bc9e7f067b060de, type: 2}
