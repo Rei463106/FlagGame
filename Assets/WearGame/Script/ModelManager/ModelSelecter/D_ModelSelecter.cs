@@ -18,12 +18,12 @@ internal class D_ModelSelecter
     }
 
     /// <summary>
-    /// アイテムを選択して送信(ゴミ箱・最初用)
+    /// アイテムを選択して送信(ゴミ箱用)
     /// </summary>
-    public void SelectItem()
+    public void SelectItemDust()
     {
-        SelectItemBase();
         EventBus.Publish<DustBoxEvent>(new DustBoxEvent());
+        SelectItemBase();     
     }
 
     /// <summary>
@@ -38,7 +38,7 @@ internal class D_ModelSelecter
     /// <summary>
     /// お手本選出
     /// </summary>
-    private void SelectItemBase()
+    public void SelectItemBase()
     {
         foreach (Parts item in Enum.GetValues(typeof(Parts)))
         {
