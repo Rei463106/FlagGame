@@ -7,12 +7,12 @@ using UnityEngine;
 internal class R_ColliderManager : MonoBehaviour
 {
     [Header("対応表")]
-    [SerializeField] private TypeSetting[] _settings;
+    [SerializeField] private ForTypeDic _settings;
 
     private bool _isInSend;
     private bool _isOutSend;
 
-    private Dictionary<Parts, GameObject> _colliderDic = new Dictionary<Parts, GameObject>();
+    private Dictionary<Parts, Setting> _colliderDic = new Dictionary<Parts, Setting>();
     private ClothItem _item;
     private CancellationTokenSource _source;
 
@@ -21,6 +21,8 @@ internal class R_ColliderManager : MonoBehaviour
         EventBus.Subscribe<DragGiveSettingEvent>(this, ReceiveDragSetting);
         EventBus.Subscribe<ObjectInsideEvent>(this, ReceiveInside);
         EventBus.Subscribe<ObjectOutsideEvent>(this, ReceiveOutside);
+        EventBus.Subscribe<CorrectEvent>(this, ReceiveCorrect);
+        EventBus.Subscribe<DustBoxEvent>(this, ReceiveDustBox);
     }
 
     private void OnDisable()
@@ -30,12 +32,28 @@ internal class R_ColliderManager : MonoBehaviour
 
     private void Start()
     {
-        foreach (var pair in _settings)
+        foreach (var pair in _settings.Settings)
         {
-            _colliderDic[pair.Parts] = pair.Object;
+            _colliderDic[pair.Parts] = pair.Setting;
         }
         _source = new CancellationTokenSource();
         WaitUntilflag(_source.Token).Forget();
+    }
+
+    private void ReceiveCorrect(CorrectEvent co)
+    {
+        foreach (var c in _colliderDic.Keys)
+        {
+            _colliderDic[c].Sp.sprite = null;
+        }
+    }
+
+    private void ReceiveDustBox(DustBoxEvent d)
+    {
+        foreach (var c in _colliderDic.Keys)
+        {
+            _colliderDic[c].Sp.sprite = null;
+        }
     }
 
     private void ReceiveDragSetting(DragGiveSettingEvent d)
@@ -45,8 +63,8 @@ internal class R_ColliderManager : MonoBehaviour
         {
             if (k == _item.Parts)
             {
-                _colliderDic[k].GetComponent<R_ColliderSetting>().ReceiveSettingInfo(_item);
-                _colliderDic[k].GetComponent<L_ColliderSetting>().ReceiveSettingInfo(_item);
+                _colliderDic[k].RColliderSetting.ReceiveSettingInfo(_item);
+                _colliderDic[k].LColliderSetting.ReceiveSettingInfo(_item);
                 break;
             }
         }
@@ -58,19 +76,22 @@ internal class R_ColliderManager : MonoBehaviour
         {
             await UniTask.WaitUntil(() => _isInSend || _isOutSend);
 
-            if (_isInSend)
+            if (_item != null)
             {
-                _colliderDic[_item.Parts].GetComponent<SpriteRenderer>().sprite =
-                     _colliderDic[_item.Parts].GetComponent<L_ColliderSetting>().CurrentSprite;
-            }
-            else
-            {
-                _colliderDic[_item.Parts].GetComponent<SpriteRenderer>().sprite =
-                     _colliderDic[_item.Parts].GetComponent<L_ColliderSetting>().OldSprite;
+                if (_isInSend)
+                {
+                    _colliderDic[_item.Parts].Sp.sprite =
+                         _colliderDic[_item.Parts].LColliderSetting.CurrentSprite;
+                }
+                else
+                {
+                    _colliderDic[_item.Parts].Sp.sprite =
+                         _colliderDic[_item.Parts].LColliderSetting.OldSprite;
+                }
+                _isInSend = false;
+                _isOutSend = false;
             }
 
-            _isInSend = false;
-            _isOutSend = false;
             await UniTask.Yield();
         }
     }
@@ -86,16 +107,42 @@ internal class R_ColliderManager : MonoBehaviour
     }
 }
 
+//以下、取得用
+
 [Serializable]
-internal struct TypeSetting
+internal struct ForTypeDic
+{
+    [Header("SettingList")]
+    [SerializeField] private PartsSetting[] _setting;
+
+    public PartsSetting[] Settings => _setting;
+}
+
+[Serializable]
+internal struct PartsSetting
 {
     [Header("Parts")]
     [SerializeField] private Parts _parts;
-    [Header("GameObject")]
-    [SerializeField] private GameObject _object;
+    [Header("Setting")]
+    [SerializeField] private Setting _setting;
 
     public Parts Parts => _parts;
-    public GameObject Object => _object;
+    public Setting Setting => _setting;
+}
+
+[Serializable]
+internal struct Setting
+{
+    [Header("SpriteRenderer")]
+    [SerializeField] private SpriteRenderer _sp;
+    [Header("R_Collider")]
+    [SerializeField] private R_ColliderSetting _setting;
+    [Header("L_Collider")]
+    [SerializeField] private L_ColliderSetting _colliderSetting;
+
+    public SpriteRenderer Sp => _sp;
+    public L_ColliderSetting LColliderSetting => _colliderSetting;
+    public R_ColliderSetting RColliderSetting => _setting;
 }
 
 

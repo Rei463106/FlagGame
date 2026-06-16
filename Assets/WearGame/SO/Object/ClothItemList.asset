@@ -12,8 +12,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c3f5f83fc6d687a4695da6b4e8111c56, type: 3}
   m_Name: ClothItemList
   m_EditorClassIdentifier: Assembly-CSharp::ClothList
-  _setttings:
-  - {fileID: 11400000, guid: 11c75080b0601b448b673ae131d48380, type: 2}
-  - {fileID: 11400000, guid: e7a6cb782431b6645a7d50a2bec66d55, type: 2}
-  - {fileID: 11400000, guid: bfb29a3fc88229441bc9e7f067b060de, type: 2}
-  - {fileID: 11400000, guid: 0928118a8fa214741b161d3ff59427e9, type: 2}
+  _list:
+  - _parts: 0
+    _setttings:
+    - {fileID: 11400000, guid: 11c75080b0601b448b673ae131d48380, type: 2}
+    - {fileID: 11400000, guid: e7a6cb782431b6645a7d50a2bec66d55, type: 2}
+  - _parts: 1
+    _setttings:
+    - {fileID: 11400000, guid: bfb29a3fc88229441bc9e7f067b060de, type: 2}
+  - _parts: 2
+    _setttings:
+    - {fileID: 11400000, guid: 0928118a8fa214741b161d3ff59427e9, type: 2}
