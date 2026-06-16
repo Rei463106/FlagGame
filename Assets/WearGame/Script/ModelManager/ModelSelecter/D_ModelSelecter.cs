@@ -1,24 +1,19 @@
+using System;
 using System.Collections.Generic;
-using UnityEngine;
 
 internal class D_ModelSelecter
 {
     private ClothList _list;
-    private List<ClothItem> _headItem = new List<ClothItem>();
-    private List<ClothItem> _bodyItem = new List<ClothItem>();
-    private List<ClothItem> _footItem = new List<ClothItem>();
+    private Dictionary<Parts, ClothItem[]> _modelSelectOriginDic = new Dictionary<Parts, ClothItem[]>();//元を入れるための辞書
+    private Dictionary<Parts, ClothItem> _modelSelectDic = new Dictionary<Parts, ClothItem>();
 
     public D_ModelSelecter(ClothList list)
     {
         _list = list;
-        foreach (var item in _list.ClothItemList)
+
+        foreach (var item in _list.PartsLists)
         {
-            if (item.Parts == Parts.Head)
-                _headItem?.Add(item);
-            else if (item.Parts == Parts.Body)
-                _bodyItem?.Add(item);
-            else if (item.Parts == Parts.Foot)
-                _footItem?.Add(item);
+            _modelSelectOriginDic?.TryAdd(item.Parts, item.ClothItemList);
         }
     }
 
@@ -27,11 +22,8 @@ internal class D_ModelSelecter
     /// </summary>
     public void SelectItem()
     {
-        var head = _headItem[Random.Range(0, _headItem.Count)];
-        var body = _bodyItem[Random.Range(0, _bodyItem.Count)];
-        var foot = _footItem[Random.Range(0, _footItem.Count)];
-
-        EventBus.Publish<ModelChangeEvent>(new ModelChangeEvent(head, body, foot));
+        SelectItemBase();
+        EventBus.Publish<DustBoxEvent>(new DustBoxEvent());
     }
 
     /// <summary>
@@ -40,10 +32,19 @@ internal class D_ModelSelecter
     /// <param name="c"></param>
     public void SelectItem(CorrectEvent c)
     {
-        var head = _headItem[Random.Range(0, _headItem.Count)];
-        var body = _bodyItem[Random.Range(0, _bodyItem.Count)];
-        var foot = _footItem[Random.Range(0, _footItem.Count)];
+        SelectItemBase();
+    }
 
-        EventBus.Publish<ModelChangeEvent>(new ModelChangeEvent(head, body, foot));
+    /// <summary>
+    /// お手本選出
+    /// </summary>
+    private void SelectItemBase()
+    {
+        foreach (Parts item in Enum.GetValues(typeof(Parts)))
+        {
+            _modelSelectDic[item] = _modelSelectOriginDic[item][UnityEngine.Random.Range(0, _modelSelectOriginDic[item].Length)];
+        }//Partsごとに選出
+
+        EventBus.Publish<ModelChangeEvent>(new ModelChangeEvent(_modelSelectDic));
     }
 }

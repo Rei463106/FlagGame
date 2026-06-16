@@ -50,7 +50,6 @@ public class R_ObjectPool : MonoBehaviour
     /// <param name="obj"></param>
     private void OnGetFromPool(GameObject obj)
     {
-        Debug.Log(obj.GetInstanceID());
         obj.SetActive(true);
         if (obj.TryGetComponent<SpriteRenderer>(out var c))
         {

@@ -1,12 +1,23 @@
-using System.Collections.Generic;
+using System;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "ClothItemList", menuName = "Cloth/ClothItemList")]
 internal class ClothList : ScriptableObject
 {
-    [Header("答え集")]
-    [SerializeField] private List<ClothItem> _setttings = new List<ClothItem>();
+    [Header("パーツごとのリスト")]
+    [SerializeField] private PartsList[] _list;
 
-    /// <summary>正解が入っているリスト</summary>
-    public List<ClothItem> ClothItemList => _setttings;
+    public PartsList[] PartsLists => _list;
+}
+
+[Serializable]
+internal struct PartsList
+{
+    [Header("Parts")]
+    [SerializeField] private Parts _parts;
+    [Header("Parts集")]
+    [SerializeField] private ClothItem[] _setttings;
+
+    public Parts Parts => _parts;
+    public ClothItem[] ClothItemList => _setttings;
 }

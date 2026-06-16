@@ -16,10 +16,24 @@ internal class L_ColliderSetting : MonoBehaviour
     private void OnEnable()
     {
         EventBus.Subscribe<DragGiveRevertEvent>(this, ReceiveMousePos);
+        EventBus.Subscribe<CorrectEvent>(this, ReceiveCorrect);
+        EventBus.Subscribe<DustBoxEvent>(this, ReceiveDustBox);
     }
     private void OnDisable()
     {
         EventBus.AllUnSubscribe(this);
+    }
+
+    private void ReceiveCorrect(CorrectEvent c)
+    {
+        _currentSprite = null;
+        _oldSprite = null;
+    }
+
+    private void ReceiveDustBox(DustBoxEvent d)
+    {
+        _currentSprite = null;
+        _oldSprite = null;
     }
 
     /// <summary>

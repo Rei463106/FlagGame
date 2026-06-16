@@ -33,14 +33,9 @@ public class L_ModelSelecter : MonoBehaviour
     /// <param name="m"></param>
     private void ReceiveSelecter(ModelChangeEvent m)
     {
-        foreach (var d in _spDic.Keys)
+        foreach (Parts item in Enum.GetValues(typeof(Parts)))
         {
-            if (d == Parts.Head)
-                _spDic[d].sprite = m._head.Sprite;
-            else if (d == Parts.Body)
-                _spDic[d].sprite = m._body.Sprite;
-            else if (d == Parts.Foot)
-                _spDic[d].sprite = m._foot.Sprite;
+            _spDic[item].sprite = m._modelSelectDic[item].Sprite;
         }
     }
 }
@@ -48,11 +43,11 @@ public class L_ModelSelecter : MonoBehaviour
 [Serializable]
 internal struct LooksSetting
 {
-    [Header("SpriteRenderer")]
-    [SerializeField] private SpriteRenderer _sp;
     [Header("Parts")]
     [SerializeField] private Parts _parts;
+    [Header("SpriteRenderer")]
+    [SerializeField] private SpriteRenderer _sp;
 
-    public SpriteRenderer SP => _sp;
     public Parts Parts => _parts;
+    public SpriteRenderer SP => _sp;
 }
