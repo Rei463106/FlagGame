@@ -1,3 +1,4 @@
+using Cysharp.Threading.Tasks;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -52,7 +53,6 @@ public class R_Confirmation : MonoBehaviour
 
         if (correct)
         {
-            Debug.Log("正解です！");
             EventBus.Publish<CorrectEvent>(new CorrectEvent());
 
             var keys = _comfirmationDic.Keys.ToList();

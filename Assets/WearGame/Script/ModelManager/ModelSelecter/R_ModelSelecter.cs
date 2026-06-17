@@ -36,6 +36,6 @@ public class R_ModelSelecter : MonoBehaviour
     /// <param name="c"></param>
     public void RenewalItem(CorrectEvent c)
     {
-        _selecter.SelectItemDust();
+        _selecter.SelectItemBase();
     }
 }

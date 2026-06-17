@@ -1,3 +1,5 @@
+using Cysharp.Threading.Tasks;
+using System;
 using UnityEngine;
 
 internal class L_ColliderSetting : MonoBehaviour
@@ -26,6 +28,12 @@ internal class L_ColliderSetting : MonoBehaviour
 
     private void ReceiveCorrect(CorrectEvent c)
     {
+        ForReceiveCorrect().Forget();
+    }
+
+    private async UniTask ForReceiveCorrect()
+    {
+        await UniTask.Delay(TimeSpan.FromSeconds(0.1f));
         _currentSprite = null;
         _oldSprite = null;
     }

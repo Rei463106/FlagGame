@@ -27,16 +27,7 @@ internal class D_ModelSelecter
     }
 
     /// <summary>
-    /// 正解時用
-    /// </summary>
-    /// <param name="c"></param>
-    public void SelectItem(CorrectEvent c)
-    {
-        SelectItemBase();
-    }
-
-    /// <summary>
-    /// お手本選出
+    /// お手本選出、正解時用に
     /// </summary>
     public void SelectItemBase()
     {
