@@ -1,8 +1,7 @@
-#if UNITY_EDITOR
-using UnityEditor;
-#endif 
-using UnityEngine;
 
+/// <summary>
+/// ドラッグ時に設定を渡す
+/// </summary>
 internal readonly struct DragGiveSettingEvent : IGameEvent
 {
     public ClothItem Setting { get; }

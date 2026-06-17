@@ -20,6 +20,7 @@ public class R_Score : MonoBehaviour
         EventBus.Subscribe<ModelChangeEvent>(this, ReceiveModel);
         EventBus.Subscribe<DustBoxEvent>(this, ReceiveDustBox);
         EventBus.Subscribe<CorrectEvent>(this, ReceiveCorrect);
+        EventBus.Subscribe<WearGameFinishEvent>(this, ReceiveGameFinish);
     }
 
     private void OnDisable()
@@ -64,5 +65,22 @@ public class R_Score : MonoBehaviour
 
         if (!flag)
             _dScore.NormalAddScore(_normalPoint);
+    }
+
+    private void ReceiveGameFinish(WearGameFinishEvent w)
+    {
+        HaveScore.Subst(_dScore.Score);
+    }
+}
+
+public static class HaveScore
+{
+    private static int _score;
+
+    public static int Score => _score;
+
+    public static void Subst(int score)
+    {
+        _score = score;
     }
 }

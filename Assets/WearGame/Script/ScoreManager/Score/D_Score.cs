@@ -6,6 +6,8 @@ public class D_Score
 {
     private int _score;
 
+    public int Score => _score;
+
     public void NormalAddScore(int score)
     {
         _score += score;

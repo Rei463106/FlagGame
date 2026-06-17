@@ -42,10 +42,19 @@ internal class R_ColliderManager : MonoBehaviour
 
     private void ReceiveCorrect(CorrectEvent co)
     {
+        ForCorrectTask(_source.Token).Forget();
+    }
+
+    private async UniTask ForCorrectTask(CancellationToken ca)
+    {
+        await UniTask.Delay(TimeSpan.FromSeconds(2));//演出により秒数変わるかも
+
         foreach (var c in _colliderDic.Keys)
         {
             _colliderDic[c].Sp.sprite = null;
         }
+
+        //ここでイベント発行すればよさそうだけど…
     }
 
     private void ReceiveDustBox(DustBoxEvent d)

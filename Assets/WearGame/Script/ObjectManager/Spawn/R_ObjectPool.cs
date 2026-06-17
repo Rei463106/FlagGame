@@ -20,6 +20,16 @@ public class R_ObjectPool : MonoBehaviour
     private CancellationTokenSource _source = new CancellationTokenSource();
     private CancellationToken _token;
 
+    private void OnEnable()
+    {
+        EventBus.Subscribe<WearGameFinishEvent>(this, ReceiveGameFinish);
+    }
+
+    private void OnDisable()
+    {
+        EventBus.AllUnSubscribe(this);
+    }
+
     private void Start()
     {
         _pool = new ObjectPool<GameObject>(
@@ -104,5 +114,10 @@ public class R_ObjectPool : MonoBehaviour
 
             await UniTask.Yield();
         }
+    }
+
+    private void ReceiveGameFinish(WearGameFinishEvent w)
+    {
+        _pool.Release(_currentObject);
     }
 }
