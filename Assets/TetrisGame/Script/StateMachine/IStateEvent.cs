@@ -6,9 +6,9 @@ using System;
 public interface IStateEvent
 {
     /// <summary>自分のステート</summary>
-    public StateEnum _state { get; }
+    public StateEnum State { get; }
 
-    /// <summary>登録してもらう用</summary>
+    /// <summary>登録してもらう用・終了したかどうかをもらう</summary>
     public event Action<StateEnum> StateChanged;
 
     /// <summary>ステート側から発火する</summary>

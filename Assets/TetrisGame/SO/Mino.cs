@@ -20,33 +20,24 @@ public struct MinoSetting
     [SerializeField] private string _name;
     [Header("MinoPrefab")]
     [SerializeField] private GameObject _minoPrefab;
-    [Header("スポーン位置:X")]
-    [SerializeField] private int _spawnX;
-    [Header("スポーン位置:Y")]
-    [SerializeField] private int _spawnY;
-    [Header("回転軸のスポーン位置とのずれ：X")]
-    [SerializeField] private int _rotateX;
-    [Header("回転軸のスポーン位置とのずれ：Y")]
-    [SerializeField] private int _rotateY;
+    [Header("スポーン位置")]
+    [SerializeField] private Vector2 _spawnPosition;
+    [Header("回転軸,ずれ")]
+    [SerializeField] private Vector2 _displaceRotate;
     [Header("SpawnSetting")]
     [SerializeField] private SpawnSetting[] _setting;
 
     public GameObject MinoPrefab => _minoPrefab;
-    public int SpawnX => _spawnX;
-    public int SpawnY => _spawnY;
-    public int RotateX => _rotateX;
-    public int RotateY => _rotateY;
+    public Vector2 SpawnPosition => _spawnPosition;
+    public Vector2 DisplaceRotate => _displaceRotate;
     public SpawnSetting[] SSetting => _setting;
 }
 
 [Serializable]
 public struct SpawnSetting
 {
-    [Header("スポーン位置とのずれ:X")]
-    [SerializeField] private int _displacementX;
-    [Header("スポーン位置とのずれ:Y")]
-    [SerializeField] private int _displacementY;
+    [Header("ブロック,ずれ")]
+    [SerializeField] private Vector2 _diaplacePosition;
 
-    public int DisplacementX => _displacementX;
-    public int DisplacementY => _displacementY;
+    public Vector2 DisplacePostion => _diaplacePosition;
 }
