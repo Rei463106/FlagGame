@@ -1,15 +1,21 @@
+using System;
 using UnityEngine;
 using UnityEngine.Pool;
 
 /// <summary>
 /// Minoをスポーンさせる処理
 /// </summary>
-public class MinoSpawn : MinoPool
+public class SpawnManager : MinoPool, IStateEvent
 {
     private IObjectPool<GameObject> _iPool;
 
+    public event Action<StateEnum> StateChanged;
+
+    public StateEnum State => StateEnum.Spawn;
+
     private void Awake()
     {
+        StateMachine.Entry<SpawnManager>(this);
         _iPool = _pool;
     }
 
@@ -23,5 +29,12 @@ public class MinoSpawn : MinoPool
             var enterMino = d;
             enterMino.Enter(() => _iPool.Release(o));
         }
+
+        StateChanged?.Invoke(StateEnum.Confirm);
+    }
+
+    public void Starter()
+    {
+        SpawnTurn();
     }
 }

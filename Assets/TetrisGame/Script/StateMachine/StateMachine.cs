@@ -1,10 +1,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class StateMachineBase : MonoBehaviour
+public class StateMachine : MonoBehaviour
 {
+    [Header("現在のステート")]
+    [SerializeField] private StateEnum _currentState;
+
     private static Dictionary<StateEnum, IStateEvent> _stateDic = new();
-    private StateEnum _currentState;
 
     /// <summary>
     ///登録用
@@ -14,13 +16,13 @@ public class StateMachineBase : MonoBehaviour
     /// <param name="obj"></param>
     public static void Entry<T>(T obj) where T : class, IStateEvent
     {
-        _stateDic?.TryAdd(obj._state, obj);
+        _stateDic?.TryAdd(obj.State, obj);
     }
 
     /// <summary>
     /// 一番最初に発火させる
     /// </summary>
-    private void Awake()
+    private void Start()
     {
         _currentState = StateEnum.Start;
         _stateDic[_currentState].StateChanged += Progress;//向こうのイベントを購読
@@ -37,13 +39,8 @@ public class StateMachineBase : MonoBehaviour
         {
             _stateDic[next].StateChanged += Progress;
             _stateDic[next].Starter();
-            _stateDic[_currentState].StateChanged -= Progress;
-            _currentState = next;
         }
-        else
-        {
-            _stateDic[_currentState].StateChanged -= Progress;
-            _currentState = next;
-        }
+        _stateDic[_currentState].StateChanged -= Progress;
+        _currentState = next;
     }
 }
