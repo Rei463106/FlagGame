@@ -1,12 +1,11 @@
 using System;
-using UnityEngine;
 
 /// <summary>
 /// 確認マネージャー
 /// </summary>
-public class ConfirmManager : MonoBehaviour, IStateEvent
+public class ConfirmManager : MinoConfirm, IStateEvent
 {
-    public StateEnum State => throw new NotImplementedException();
+    public StateEnum State => StateEnum.Confirm;
 
     public event Action<StateEnum> StateChanged;
 
@@ -22,7 +21,7 @@ public class ConfirmManager : MonoBehaviour, IStateEvent
 
     private void OnEnable()
     {
-        EventBus.Subscribe<CallPositionEvent>(this, ReceivePosition);
+        EventBus.Subscribe<UpdatePositionEvent>(this, ReceivePosition);
     }
 
     private void OnDisable()
@@ -30,9 +29,17 @@ public class ConfirmManager : MonoBehaviour, IStateEvent
         EventBus.AllUnSubscribe(this);
     }
 
-    private void ReceivePosition(CallPositionEvent c)
+    /// <summary>
+    /// もらったVector2の配列を代入し送信
+    /// </summary>
+    /// <param name="c"></param>
+    private void ReceivePosition(UpdatePositionEvent c)
     {
-        //位置情報を受け取って、配列に代入。位置を送信する
+        foreach (var e in c._positions)
+        {
+            UpdateArray((int)e.x, (int)e.y);
+        }
+        EventBus.Publish<SendArrayEvent>(new SendArrayEvent(MinoArray));
         Starter();
     }
 }

@@ -23,7 +23,7 @@ public class SpawnManager : MinoPool, IStateEvent
     {
         var o = _iPool.Get();
 
-        if (o.TryGetComponent<EnterMino>(out var d))
+        if (o.TryGetComponent<DoorMino>(out var d))
         {
             if (d == null) return;
             var enterMino = d;

@@ -16,8 +16,6 @@ public class Mino : ScriptableObject
 [Serializable]
 public struct MinoSetting
 {
-    [Header("Minoの名前")]
-    [SerializeField] private string _name;
     [Header("MinoPrefab")]
     [SerializeField] private GameObject _minoPrefab;
     [Header("スポーン位置")]
