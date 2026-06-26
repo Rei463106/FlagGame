@@ -7,32 +7,20 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "Mino", menuName = "MinoObjects/Mino")]
 public class Mino : ScriptableObject
 {
-    [Header("MinoSetting")]
-    [SerializeField] private MinoSetting[] _setting;
-
-    public MinoSetting[] MSetting => _setting;
-}
-
-[Serializable]
-public struct MinoSetting
-{
-    [Header("MinoPrefab")]
-    [SerializeField] private GameObject _minoPrefab;
     [Header("スポーン位置")]
     [SerializeField] private Vector2 _spawnPosition;
     [Header("回転軸,ずれ")]
     [SerializeField] private Vector2 _displaceRotate;
     [Header("SpawnSetting")]
-    [SerializeField] private SpawnSetting[] _setting;
+    [SerializeField] private MinoSetting[] _setting;
 
-    public GameObject MinoPrefab => _minoPrefab;
     public Vector2 SpawnPosition => _spawnPosition;
     public Vector2 DisplaceRotate => _displaceRotate;
-    public SpawnSetting[] SSetting => _setting;
+    public MinoSetting[] MSetting => _setting;
 }
 
 [Serializable]
-public struct SpawnSetting
+public struct MinoSetting
 {
     [Header("ブロック,ずれ")]
     [SerializeField] private Vector2 _diaplacePosition;

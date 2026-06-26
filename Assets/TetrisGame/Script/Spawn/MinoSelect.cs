@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
@@ -5,15 +6,11 @@ using UnityEngine;
 /// </summary>
 public class MinoSelect : MonoBehaviour
 {
-    [Header("SO")]
-    [SerializeField] private Mino _mino;
+    [Header("GameObjects")]
+    [SerializeField] private List<GameObject> _minoPrefab = new();
 
-    private MinoSetting _mSet;
-
-    protected GameObject ResetMino()//スポーン時に呼ぶ
+    protected GameObject MakeMino()//スポーン時に呼ぶ
     {
-        _mSet = _mino.MSetting[Random.Range(0, _mino.MSetting.Length - 1)];
-        GameObject obj = _mSet.MinoPrefab;
-        return obj;
+        return _minoPrefab[Random.Range(0, _minoPrefab.Count - 1)];
     }
 }
