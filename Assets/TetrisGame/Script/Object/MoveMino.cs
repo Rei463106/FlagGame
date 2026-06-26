@@ -51,7 +51,8 @@ public class MoveMino : DoorMino
         //初期位置
         foreach (var v in _mino.MSetting)
         {
-            _minoPositions.Add(_mino.SpawnPosition + v.DisplacePostion);
+            var m = _mino.SpawnPosition + v.DisplacePostion;
+            _minoPositions.Add(new Vector2(m.x, -m.y));
         }
 
         _rotatePosition = _mino.SpawnPosition + _mino.DisplaceRotate;
@@ -147,7 +148,7 @@ public class MoveMino : DoorMino
             if (isGoing)
             {
                 var v = transform.position;
-                transform.position = new Vector2(v.x, v.y + 1);
+                transform.position = new Vector2(v.x, v.y - 1);
 
                 for (int i = 0; i < _minoPositions.Count; i++)
                 {
@@ -157,7 +158,7 @@ public class MoveMino : DoorMino
 
                 //回転軸も更新する
                 var r = _rotatePosition;
-                _rotatePosition = new Vector2(r.x, r.y + 1);
+                _rotatePosition = new Vector2(r.x, r.y - 1);
             }
         }
         else
@@ -215,7 +216,7 @@ public class MoveMino : DoorMino
                     }
 
                     var r = _rotatePosition;
-                    _rotatePosition = new Vector2(r.x, r.y + 1);
+                    _rotatePosition = new Vector2(r.x, r.y - 1);
                 }
 
                 await UniTask.Delay(TimeSpan.FromSeconds(1f), cancellationToken: token);
