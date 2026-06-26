@@ -10,12 +10,12 @@ public class MinoPool : MinoSelect
 
     void Awake()
     {
-        _pool = new ObjectPool<GameObject>(OnCreatePooledObject, OnGetFromPool, OnReleaseToPool, OnDestroyPooledObject, true, 100, 200);
+        _pool = new ObjectPool<GameObject>(OnCreatePooledObject, OnGetFromPool, OnReleaseToPool, OnDestroyPooledObject,true,100,200);
     }
 
     GameObject OnCreatePooledObject()
     {
-        return Instantiate(ResetMino());
+        return Instantiate(MakeMino());
     }
 
     void OnGetFromPool(GameObject obj)

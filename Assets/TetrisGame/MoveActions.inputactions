@@ -1,0 +1,115 @@
+{
+    "version": 1,
+    "name": "MoveActions",
+    "maps": [
+        {
+            "name": "InputMove",
+            "id": "ed9c209e-9b2e-47ba-9f30-7e0c7e5b1c4d",
+            "actions": [
+                {
+                    "name": "Left",
+                    "type": "Button",
+                    "id": "710cd05c-5585-4c4a-b408-25f7fafa5fe7",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Right",
+                    "type": "Button",
+                    "id": "2a5fe651-e11a-487e-bb11-9558a43587fb",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Down",
+                    "type": "Button",
+                    "id": "3ea6eff7-125d-4e98-a01b-f054812105af",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "LeftRotate",
+                    "type": "Button",
+                    "id": "86154285-5f0e-4a57-b576-fe6ee99ef4a1",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "RightLotate",
+                    "type": "Button",
+                    "id": "2b14de05-930f-4752-896c-712634a6f47e",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "853f1c0d-0108-48bd-be56-8c1ed3007b15",
+                    "path": "<Keyboard>/a",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Left",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "e2951bb0-e655-4b90-a139-2b51a2f28150",
+                    "path": "<Keyboard>/d",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Right",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "f549ede0-3d31-41d6-a57c-df9ae683d474",
+                    "path": "<Keyboard>/s",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Down",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "71c7ed53-dae5-4778-b261-5e6ebfc4bfbc",
+                    "path": "<Keyboard>/k",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "LeftRotate",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "9b0ca1b4-1338-45af-94b9-4bc09016c25b",
+                    "path": "<Keyboard>/l",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "RightLotate",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        }
+    ],
+    "controlSchemes": []
+}

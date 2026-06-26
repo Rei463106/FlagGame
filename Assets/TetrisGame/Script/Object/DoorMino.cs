@@ -7,6 +7,7 @@ using UnityEngine;
 public class DoorMino : MonoBehaviour
 {
     private event Action EnterAction;
+    protected event Action InsideEnterAction;
 
     /// <summary>
     /// 入室
@@ -14,6 +15,7 @@ public class DoorMino : MonoBehaviour
     /// <param name="action"></param>
     public void Enter(Action action)
     {
+        InsideEnterAction?.Invoke();
         EnterAction += action;
     }
 
