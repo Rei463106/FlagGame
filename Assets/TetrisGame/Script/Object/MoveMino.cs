@@ -182,9 +182,11 @@ public class MoveMino : DoorMino
     private void EnterAction()
     {
         transform.position = _mino.SpawnPosition;
+        _pushUnderType = PushUnder.Move;
         AutoFall(_token).Forget();
     }
 
+    /// <summary>自動落下</summary>
     private async UniTask AutoFall(CancellationToken token)
     {
         try
@@ -217,6 +219,7 @@ public class MoveMino : DoorMino
 
                     var r = _rotatePosition;
                     _rotatePosition = new Vector2(r.x, r.y - 1);
+                    _pushUnderType = PushUnder.Move;
                 }
 
                 await UniTask.Delay(TimeSpan.FromSeconds(1f), cancellationToken: token);
@@ -255,6 +258,7 @@ public class MoveMino : DoorMino
                 if (isGoing)
                 {
                     AutoFall(_token).Forget();//なかったら再び動かす
+                    _pushUnderType = PushUnder.Move;//成功時は再び押せるように
                 }
                 else
                 {
