@@ -1,6 +1,6 @@
 
 /// <summary>
-/// 消す時の処理があるものにつける
+/// 配列を渡すイベント
 /// </summary>
 public readonly struct SendArrayEvent : IGameEvent
 {

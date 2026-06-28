@@ -15,7 +15,7 @@ public class MinoArray : MonoBehaviour
     protected static MinoArraySetting[,] MArraySetting => _minoArray;
 
     /// <summary>配列の作成</summary>
-    private void Awake()
+    protected void PleaseAwake()
     {
         _minoArray = new MinoArraySetting[_line, _corumn];
 

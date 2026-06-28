@@ -6,14 +6,15 @@ using UnityEngine.Pool;
 /// </summary>
 public class MinoPool : MinoSelect
 {
-    protected ObjectPool<GameObject> _pool;
+    [SerializeField] private GameObject _obj;
+    protected IObjectPool<GameObject> _iPool;
 
-    void Awake()
+    protected void PleaseAwake()
     {
-        _pool = new ObjectPool<GameObject>(OnCreatePooledObject, OnGetFromPool, OnReleaseToPool, OnDestroyPooledObject,true,100,200);
+        _iPool = new ObjectPool<GameObject>(OnCreatePooledObject, OnGetFromPool, OnReleaseToPool, OnDestroyPooledObject, true, 100, 200);
     }
 
-    GameObject OnCreatePooledObject()
+    private GameObject OnCreatePooledObject()
     {
         return Instantiate(MakeMino());
     }

@@ -11,6 +11,6 @@ public class MinoSelect : MonoBehaviour
 
     protected GameObject MakeMino()//スポーン時に呼ぶ
     {
-        return _minoPrefab[Random.Range(0, _minoPrefab.Count - 1)];
+        return _minoPrefab[Random.Range(0, _minoPrefab.Count)];
     }
 }

@@ -62,7 +62,7 @@ public class MoveMino : DoorMino
 
     private void OnDestroy() => _actions?.Dispose();
 
-    /// <summary>入室時登録用</summary>
+    /// <summary>入室時</summary>
     private void EnterAction()
     {
         transform.position = _mino.SpawnPosition;
@@ -71,13 +71,11 @@ public class MoveMino : DoorMino
         AutoFall(_token).Forget();
     }
 
-    /// <summary>
-    /// 終了時
-    /// </summary>
-    private void ObjectFinish()
+    /// <summary>退室時</summary>
+    private void FinishAction()
     {
         _pushType = PushType.None;
-        EventBus.Publish<UpdatePositionEvent>(new UpdatePositionEvent());
+        EventBus.Publish<UpdatePositionEvent>(new UpdatePositionEvent(_currentPos));
         Delete();
     }
 
@@ -331,7 +329,7 @@ public class MoveMino : DoorMino
             }
             else
             {
-                ObjectFinish();
+                FinishAction();
             }
         }
     }

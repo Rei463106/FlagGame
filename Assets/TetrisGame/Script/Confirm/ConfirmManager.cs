@@ -1,21 +1,25 @@
+using Cysharp.Threading.Tasks;
 using System;
+using UnityEngine;
 
 /// <summary>
 /// 確認マネージャー
 /// </summary>
 public class ConfirmManager : MinoConfirm, IStateEvent
 {
+    private bool _isStart;
     public StateEnum State => StateEnum.Confirm;
 
     public event Action<StateEnum> StateChanged;
 
     public void Starter()
     {
-        StateChanged?.Invoke(StateEnum.Delete);//次は消す処理へ
+        WaitFinish().Forget();
     }
 
     private void Awake()
     {
+        PleaseAwake();
         StateMachine.Entry<ConfirmManager>(this);
     }
 
@@ -40,6 +44,13 @@ public class ConfirmManager : MinoConfirm, IStateEvent
             UpdateArray(e, true);
         }
         EventBus.Publish<SendArrayEvent>(new SendArrayEvent(MArraySetting));
-        Starter();
+        _isStart = true;
+    }
+
+    private async UniTask WaitFinish()
+    {
+        await UniTask.WaitUntil(() => _isStart);
+        _isStart = false;
+        StateChanged?.Invoke(StateEnum.Delete);//次は消す処理へ
     }
 }

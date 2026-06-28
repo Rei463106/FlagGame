@@ -1,4 +1,4 @@
-
+using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
@@ -6,9 +6,9 @@ using UnityEngine;
 /// </summary>
 public readonly struct UpdatePositionEvent : IGameEvent
 {
-    public readonly Vector2[] _positions;
+    public readonly List<Vector2> _positions;
 
-    public UpdatePositionEvent(Vector2[] positions)
+    public UpdatePositionEvent(List<Vector2> positions)
     {
         _positions = positions;
     }

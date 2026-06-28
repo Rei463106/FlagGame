@@ -1,22 +1,19 @@
-using System;
 using UnityEngine;
-using UnityEngine.Pool;
+using System;
 
 /// <summary>
 /// Minoをスポーンさせる処理
 /// </summary>
 public class SpawnManager : MinoPool, IStateEvent
 {
-    private IObjectPool<GameObject> _iPool;
-
     public event Action<StateEnum> StateChanged;
 
     public StateEnum State => StateEnum.Spawn;
 
     private void Awake()
     {
+        PleaseAwake();
         StateMachine.Entry<SpawnManager>(this);
-        _iPool = _pool;
     }
 
     public void SpawnTurn()
