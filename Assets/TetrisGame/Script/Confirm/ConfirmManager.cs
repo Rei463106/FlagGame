@@ -37,9 +37,9 @@ public class ConfirmManager : MinoConfirm, IStateEvent
     {
         foreach (var e in c._positions)
         {
-            UpdateArray((int)e.x, (int)e.y);
+            UpdateArray(e, true);
         }
-        EventBus.Publish<SendArrayEvent>(new SendArrayEvent(MinoArray));
+        EventBus.Publish<SendArrayEvent>(new SendArrayEvent(MArraySetting));
         Starter();
     }
 }

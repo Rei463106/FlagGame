@@ -4,9 +4,9 @@
 /// </summary>
 public readonly struct SendArrayEvent : IGameEvent
 {
-    public readonly bool[,] _existPosition;
+    public readonly MinoArraySetting[,] _existPosition;
 
-    public SendArrayEvent(bool[,] existPosition)
+    public SendArrayEvent(MinoArraySetting[,] existPosition)
     {
         _existPosition = existPosition;
     }

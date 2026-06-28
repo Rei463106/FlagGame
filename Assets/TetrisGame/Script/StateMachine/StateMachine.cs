@@ -6,7 +6,7 @@ public class StateMachine : MonoBehaviour
     [Header("現在のステート")]
     [SerializeField] private StateEnum _currentState;
 
-    private static Dictionary<StateEnum, IStateEvent> _stateDic = new();
+    private static readonly Dictionary<StateEnum, IStateEvent> _stateDic = new();
 
     /// <summary>
     ///登録用
