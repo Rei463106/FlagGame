@@ -25,5 +25,5 @@ public struct MinoSetting
     [Header("ブロック,ずれ")]
     [SerializeField] private Vector2 _diaplacePosition;
 
-    public Vector2 DisplacePostion => _diaplacePosition;
+    public readonly Vector2 DisplacePostion => _diaplacePosition;
 }

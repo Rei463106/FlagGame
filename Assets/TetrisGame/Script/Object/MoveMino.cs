@@ -10,12 +10,13 @@ public class MoveMino : DoorMino
     [Header("SO")]
     [SerializeField] private Mino _mino;
 
-    private List<Vector2> _minoPositions = new();
-    private Vector2 _rotatePosition;
+    private readonly List<Vector2> _currentPos = new();
+    private Vector2 _currentRotatePos;
+
     private MoveActions _actions;
-    private PushUnder _pushUnderType = PushUnder.Move;
+
+    private PushType _pushType = PushType.None;
     private bool _isRun;
-    private bool _isPush = true;
 
     private CancellationTokenSource _source;
     private CancellationToken _token;
@@ -50,29 +51,49 @@ public class MoveMino : DoorMino
         foreach (var v in _mino.MSetting)
         {
             var m = _mino.SpawnPosition + v.DisplacePostion;
-            _minoPositions.Add(new Vector2(m.x, -m.y));
+            _currentPos.Add(m);
         }
 
-        _rotatePosition = _mino.SpawnPosition + _mino.DisplaceRotate;
+        _currentRotatePos = _mino.SpawnPosition + _mino.DisplaceRotate;
 
         _source = new CancellationTokenSource();
         _token = _source.Token;
     }
 
-    private void OnDestroy()
+    private void OnDestroy() => _actions?.Dispose();
+
+    /// <summary>入室時登録用</summary>
+    private void EnterAction()
     {
-        _actions?.Dispose();
+        transform.position = _mino.SpawnPosition;
+        _isRun = false;
+        _pushType = PushType.All;
+        AutoFall(_token).Forget();
     }
 
+    /// <summary>
+    /// 終了時
+    /// </summary>
+    private void ObjectFinish()
+    {
+        _pushType = PushType.None;
+        EventBus.Publish<UpdatePositionEvent>(new UpdatePositionEvent());
+        Delete();
+    }
+
+    /// <summary>
+    /// 左
+    /// </summary>
+    /// <param name="context"></param>
     private void OnLeft(InputAction.CallbackContext context)
     {
-        if (_isPush)
+        if (_pushType != PushType.None)
         {
             bool isGoing = true;
 
-            foreach (var v in _minoPositions)
+            foreach (var v in _currentPos)
             {
-                if (!MinoConfirm.JudgeLeft((int)v.x, (int)v.y))
+                if (!MinoConfirm.JudgeLeft(v))
                 {
                     isGoing = false;
                     break;
@@ -84,28 +105,31 @@ public class MoveMino : DoorMino
                 var v = transform.position;
                 transform.position = new Vector2(v.x - 1, v.y);
 
-                for (int i = 0; i < _minoPositions.Count; i++)
+                for (int i = 0; i < _currentPos.Count; i++)
                 {
-                    var newV = _minoPositions[i];
-                    _minoPositions[i] = new Vector2(newV.x - 1, newV.y);
-                }//現在位置を更新する
+                    var newV = _currentPos[i];
+                    _currentPos[i] = new Vector2(newV.x - 1, newV.y);
+                }
 
-                //回転軸も更新する
-                var r = _rotatePosition;
-                _rotatePosition = new Vector2(r.x - 1, r.y);
+                var r = _currentRotatePos;
+                _currentRotatePos = new Vector2(r.x - 1, r.y);
             }
         }
     }
 
+    /// <summary>
+    /// 右
+    /// </summary>
+    /// <param name="context"></param>
     private void OnRight(InputAction.CallbackContext context)
     {
-        if (_isPush)
+        if (_pushType != PushType.None)
         {
             bool isGoing = true;
 
-            foreach (var v in _minoPositions)
+            foreach (var v in _currentPos)
             {
-                if (!MinoConfirm.JudgeRight((int)v.x, (int)v.y))
+                if (!MinoConfirm.JudgeRight(v))
                 {
                     isGoing = false;
                     break;
@@ -117,31 +141,35 @@ public class MoveMino : DoorMino
                 var v = transform.position;
                 transform.position = new Vector2(v.x + 1, v.y);
 
-                for (int i = 0; i < _minoPositions.Count; i++)
+                for (int i = 0; i < _currentPos.Count; i++)
                 {
-                    var newV = _minoPositions[i];
-                    _minoPositions[i] = new Vector2(newV.x + 1, newV.y);
+                    var newV = _currentPos[i];
+                    _currentPos[i] = new Vector2(newV.x + 1, newV.y);
                 }//現在位置を更新する
 
                 //回転軸も更新する
-                var r = _rotatePosition;
-                _rotatePosition = new Vector2(r.x + 1, r.y);
+                var r = _currentRotatePos;
+                _currentRotatePos = new Vector2(r.x + 1, r.y);
             }
         }
     }
 
+    /// <summary>
+    /// 下
+    /// </summary>
+    /// <param name="context"></param>
     private void OnDown(InputAction.CallbackContext context)
     {
-        if (_pushUnderType == PushUnder.Move || _isPush)
+        if (_pushType == PushType.All)
         {
             bool isGoing = true;
 
-            foreach (var v in _minoPositions)
+            foreach (var v in _currentPos)
             {
-                if (!MinoConfirm.JudgeUnder((int)v.x, (int)v.y))
+                if (!MinoConfirm.JudgeUnder(v))
                 {
                     isGoing = false;
-                    _pushUnderType = PushUnder.None;
+                    _pushType = PushType.ProUnder;
                     UnderConfirm().Forget();
                     break;
                 }
@@ -152,32 +180,33 @@ public class MoveMino : DoorMino
                 var v = transform.position;
                 transform.position = new Vector2(v.x, v.y - 1);
 
-                for (int i = 0; i < _minoPositions.Count; i++)
+                for (int i = 0; i < _currentPos.Count; i++)
                 {
-                    var newV = _minoPositions[i];
-                    _minoPositions[i] = new Vector2(newV.x, newV.y + 1);
-                }//現在位置を更新する
+                    var newV = _currentPos[i];
+                    _currentPos[i] = new Vector2(newV.x, newV.y - 1);
+                }
 
-                //回転軸も更新する
-                var r = _rotatePosition;
-                _rotatePosition = new Vector2(r.x, r.y - 1);
+                var r = _currentRotatePos;
+                _currentRotatePos = new Vector2(r.x, r.y - 1);
             }
         }
     }
 
+    /// <summary>
+    /// 左回転
+    /// </summary>
+    /// <param name="context"></param>
     private void OnLeftRotate(InputAction.CallbackContext context)
     {
-        if (_isPush)
+        if (_pushType != PushType.None)
         {
             bool isGoing = true;
             List<Vector2> vList = new();
 
-            foreach (var v in _minoPositions)
+            foreach (var v in _currentPos)
             {
-                if (!MinoConfirm.JudgeLeftRotate((int)v.x, (int)v.y, (int)_rotatePosition.x, (int)-_rotatePosition.y, out int c, out int l))
-                {
-                    vList.Add(new Vector2(c, l));
-                }
+                if (MinoConfirm.JudgeLeftRotate(v, _currentRotatePos, out Vector2 ve))
+                    vList.Add(ve);
                 else
                 {
                     isGoing = false;
@@ -187,27 +216,28 @@ public class MoveMino : DoorMino
 
             if (isGoing)
             {
-                //左に90度回転させる
                 transform.Rotate(new Vector3(0, 0, 90));
-                _minoPositions.Clear();
-                _minoPositions.AddRange(vList);
+                _currentPos.Clear();
+                _currentPos.AddRange(vList);
             }
         }
     }
 
+    /// <summary>
+    /// 右回転
+    /// </summary>
+    /// <param name="context"></param>
     private void OnRightRotate(InputAction.CallbackContext context)
     {
-        if (_isPush)
+        if (_pushType != PushType.None)
         {
             bool isGoing = true;
             List<Vector2> vList = new();
 
-            foreach (var v in _minoPositions)
+            foreach (var v in _currentPos)
             {
-                if (MinoConfirm.JudgeRightRotate((int)v.x, (int)v.y, (int)_rotatePosition.x, (int)-_rotatePosition.y, out int c, out int l))
-                {
-                    vList.Add(new Vector2(c, l));
-                }
+                if (MinoConfirm.JudgeLeftRotate(v, _currentRotatePos, out Vector2 ve))
+                    vList.Add(ve);
                 else
                 {
                     isGoing = false;
@@ -217,22 +247,11 @@ public class MoveMino : DoorMino
 
             if (isGoing)
             {
-                //左に90度回転させる
                 transform.Rotate(new Vector3(0, 0, -90));
-                _minoPositions.Clear();
-                _minoPositions.AddRange(vList);
+                _currentPos.Clear();
+                _currentPos.AddRange(vList);
             }
         }
-    }
-
-    /// <summary>入室時登録用</summary>
-    private void EnterAction()
-    {
-        _isRun = false;
-        transform.position = _mino.SpawnPosition;
-        _pushUnderType = PushUnder.Move;
-        AutoFall(_token).Forget();
-        _isPush = true;
     }
 
     /// <summary>自動落下</summary>
@@ -244,13 +263,13 @@ public class MoveMino : DoorMino
             {
                 bool isGoing = true;
 
-                foreach (var v in _minoPositions)
+                foreach (var v in _currentPos)
                 {
-                    if (!MinoConfirm.JudgeUnder((int)v.x, (int)v.y))
+                    if (!MinoConfirm.JudgeUnder(v))
                     {
-                        isGoing = false;
-                        _pushUnderType = PushUnder.None;
+                        _pushType = PushType.ProUnder;
                         UnderConfirm().Forget();
+                        isGoing = false;
                         break;
                     }
                 }
@@ -260,14 +279,14 @@ public class MoveMino : DoorMino
                     var v = transform.position;
                     transform.position = new Vector2(v.x, v.y - 1);//配列と位置のy座標は逆
 
-                    for (int i = 0; i < _minoPositions.Count; i++)
+                    for (int i = 0; i < _currentPos.Count; i++)
                     {
-                        var newV = _minoPositions[i];
-                        _minoPositions[i] = new Vector2(newV.x, newV.y + 1);
+                        var newV = _currentPos[i];
+                        _currentPos[i] = new Vector2(newV.x, newV.y - 1);
                     }
 
-                    var r = _rotatePosition;
-                    _rotatePosition = new Vector2(r.x, r.y - 1);
+                    var r = _currentRotatePos;
+                    _currentRotatePos = new Vector2(r.x, r.y - 1);
                 }
 
                 await UniTask.Delay(TimeSpan.FromSeconds(1f), cancellationToken: token);
@@ -289,12 +308,13 @@ public class MoveMino : DoorMino
         {
             _isRun = true;
             _source.Cancel();
+            bool isGoing = true;
+
             await UniTask.Delay(TimeSpan.FromSeconds(1f));//1秒だけ待って確かめ
 
-            bool isGoing = true;
-            foreach (var v in _minoPositions)
+            foreach (var v in _currentPos)
             {
-                if (!MinoConfirm.JudgeUnder((int)v.x, (int)v.y))
+                if (!MinoConfirm.JudgeUnder(v))
                 {
                     isGoing = false;
                     break;
@@ -303,9 +323,11 @@ public class MoveMino : DoorMino
 
             if (isGoing)
             {
-                AutoFall(_token).Forget();//なかったら再び動かす
-                _pushUnderType = PushUnder.Move;//成功時は再び押せるように
                 _isRun = false;
+                _source = new CancellationTokenSource();
+                _token = _source.Token;
+                AutoFall(_token).Forget();
+                _pushType = PushType.All;
             }
             else
             {
@@ -313,20 +335,11 @@ public class MoveMino : DoorMino
             }
         }
     }
-
-    /// <summary>
-    /// 終了時
-    /// </summary>
-    private void ObjectFinish()
-    {
-        _isPush = false;
-        EventBus.Publish<UpdatePositionEvent>(new UpdatePositionEvent());
-        Delete();
-    }
 }
 
-public enum PushUnder
+public enum PushType
 {
     None,
-    Move
+    All,
+    ProUnder
 }

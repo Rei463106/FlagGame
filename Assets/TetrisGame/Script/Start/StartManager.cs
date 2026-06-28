@@ -1,7 +1,6 @@
 
 using Cysharp.Threading.Tasks;
 using System;
-using System.Threading;
 
 /// <summary>
 /// スタートを司る
@@ -13,20 +12,12 @@ public class StartManager : StartDirection, IStateEvent
 
     public event Action<StateEnum> StateChanged;
 
-    public void Starter()
-    {
-        CancellationTokenSource source = new();
-        CancellationToken token = source.Token;
-        WaitDirection(token).Forget();
-    }
+    public void Starter() => WaitDirection().Forget();
 
     //ゲーム部分
-    private void Awake()
-    {
-        StateMachine.Entry<StartManager>(this);
-    }
+    private void Awake() => StateMachine.Entry<StartManager>(this);
 
-    private async UniTask WaitDirection(CancellationToken token)
+    private async UniTask WaitDirection()
     {
         await UniTask.WaitUntil(() => _isFinish);
         StateChanged?.Invoke(StateEnum.Spawn);//次のステートへ…
