@@ -15,7 +15,7 @@ public class StartManager : StartDirection, IStateEvent
 
     public void Starter()
     {
-        CancellationTokenSource source = new CancellationTokenSource();
+        CancellationTokenSource source = new();
         CancellationToken token = source.Token;
         WaitDirection(token).Forget();
     }
