@@ -14,7 +14,7 @@ public class StartDirection : MonoBehaviour
 
     private void Direction()
     {
-        CancellationTokenSource source = new CancellationTokenSource();
+        CancellationTokenSource source = new();
         CancellationToken token = source.Token;
         DirectionBase(token).Forget();
     }
