@@ -92,7 +92,7 @@ public class MinoConfirm : MinoArray
         var rx = involve.x - rotate.x;
         var ry = involve.y - rotate.y;
 
-        //左に90度回転させる
+        //右に90度回転させる
         var rx2 = ry;
         var ry2 = -rx;
 
@@ -105,6 +105,7 @@ public class MinoConfirm : MinoArray
             if (item._wallBlock == new Vector2(fx, fy) && !item.IsExist)
             {
                 result = new Vector2(fx, fy);
+                Debug.Log($"{result.x},{result.y}");
                 return true;
             }
         }

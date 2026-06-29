@@ -9,6 +9,8 @@ public class MoveMino : DoorMino
 {
     [Header("SO")]
     [SerializeField] private Mino _mino;
+    [Header("回転軸")]
+    [SerializeField] private Transform _rotate;
 
     private readonly List<Vector2> _currentPos = new();
     private Vector2 _currentRotatePos;
@@ -214,7 +216,7 @@ public class MoveMino : DoorMino
 
             if (isGoing)
             {
-                transform.Rotate(new Vector3(0, 0, 90));
+                transform.RotateAround(_rotate.position, Vector3.forward, 90f);
                 _currentPos.Clear();
                 _currentPos.AddRange(vList);
             }
@@ -234,7 +236,7 @@ public class MoveMino : DoorMino
 
             foreach (var v in _currentPos)
             {
-                if (MinoConfirm.JudgeLeftRotate(v, _currentRotatePos, out Vector2 ve))
+                if (MinoConfirm.JudgeRightRotate(v, _currentRotatePos, out Vector2 ve))
                     vList.Add(ve);
                 else
                 {
@@ -245,9 +247,14 @@ public class MoveMino : DoorMino
 
             if (isGoing)
             {
-                transform.Rotate(new Vector3(0, 0, -90));
+                transform.RotateAround(_rotate.position, Vector3.forward, -90f);
                 _currentPos.Clear();
                 _currentPos.AddRange(vList);
+
+                foreach (var v in _currentPos)
+                {
+                    Debug.Log(v);
+                }
             }
         }
     }

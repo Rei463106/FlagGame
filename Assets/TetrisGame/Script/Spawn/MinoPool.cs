@@ -6,7 +6,6 @@ using UnityEngine.Pool;
 /// </summary>
 public class MinoPool : MinoSelect
 {
-    [SerializeField] private GameObject _obj;
     protected IObjectPool<GameObject> _iPool;
 
     protected void PleaseAwake()
