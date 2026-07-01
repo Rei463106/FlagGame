@@ -14,8 +14,9 @@ public class DeleteManager : OperateBlock, IStateEvent
     private async UniTask DeleteDirection()
     {
         DeleteArray();
-        await UniTask.Delay(TimeSpan.FromSeconds(1f));
+        await UniTask.NextFrame(); // Ç±ÇÍèdóv
         FallDown();
+        await UniTask.Delay(TimeSpan.FromSeconds(1f));
         EventBus.Publish<UpdatePositionEvent>(new UpdatePositionEvent(SendPosition()));
         StateChanged?.Invoke(StateEnum.Spawn);
     }
