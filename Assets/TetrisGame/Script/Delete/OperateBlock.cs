@@ -25,6 +25,7 @@ public class OperateBlock : MonoBehaviour
         {
             var i = Instantiate(_minoprefab);
             i.transform.position = item;
+            i.GetComponent<SpriteRenderer>().sprite = s._sprite;
             VectorInfo info = new(item);
             _minoDic?.TryAdd(info, i);
         }
@@ -85,7 +86,7 @@ public class OperateBlock : MonoBehaviour
     {
         foreach (var item in _minoDic.Keys)
 
-            _minoDic[item].transform.DOMove(new Vector3(item.Current.x, item.Current.y, 0), 2f);
+            _minoDic[item].transform.DOMove(new Vector3(item.Current.x, item.Current.y, 0), 1f);
     }
 
     protected List<Vector2> SendPosition()

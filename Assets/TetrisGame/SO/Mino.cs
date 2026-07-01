@@ -13,10 +13,13 @@ public class Mino : ScriptableObject
     [SerializeField] private Vector2 _displaceRotate;
     [Header("SpawnSetting")]
     [SerializeField] private MinoSetting[] _setting;
+    [Header("Sprite")]
+    [SerializeField] private Sprite _sprite;
 
     public Vector2 SpawnPosition => _spawnPosition;
     public Vector2 DisplaceRotate => _displaceRotate;
     public MinoSetting[] MSetting => _setting;
+    public Sprite SpawnSprite => _sprite;
 }
 
 [Serializable]

@@ -7,9 +7,11 @@ using UnityEngine;
 public readonly struct SendPositionEvent : IGameEvent
 {
     public readonly List<Vector2> _positions;
+    public readonly Sprite _sprite;
 
-    public SendPositionEvent(List<Vector2> positions)
+    public SendPositionEvent(List<Vector2> positions, Sprite sprite)
     {
         _positions = positions;
+        _sprite = sprite;
     }
 }
