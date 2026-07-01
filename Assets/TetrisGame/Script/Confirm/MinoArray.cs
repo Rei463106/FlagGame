@@ -28,22 +28,6 @@ public class MinoArray : MonoBehaviour
         }
     }
 
-    private void Update()
-    {
-        foreach (var item in _minoArray)
-        {
-            if (item.IsExist)
-            {
-                Debug.Log(item._wallBlock);
-            }
-            else
-            {
-                Debug.Log("ない" + item._wallBlock);
-            }
-        }
-
-    }
-
     /// <summary>
     /// 対象だけtrueにする
     /// </summary>

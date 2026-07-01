@@ -78,12 +78,6 @@ public class MoveMino : DoorMino
     {
         _pushType = PushType.None;
         EventBus.Publish<SendPositionEvent>(new SendPositionEvent(_currentPos));
-
-        foreach(var f in _currentPos)
-        {
-            Debug.Log(f);
-        }
-
         Delete();
     }
 

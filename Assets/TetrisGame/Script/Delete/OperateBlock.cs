@@ -43,37 +43,36 @@ public class OperateBlock : MonoBehaviour
 
             for (int j = 0; j < d.GetLength(1); j++)
             {
-                //Debug.Log(d[i, j].IsExist);
-
                 if (!d[i, j].IsExist)
                 {
-                    //Debug.Log($"{d[i, j]._wallBlock.x},{d[i, j]._wallBlock.y}");
                     complete = false;
-                    //break;
-                }
-                else
-                {
-                    //Debug.Log($"{d[i, j]._wallBlock.x},{d[i, j]._wallBlock.y}");
+                    break;
                 }
             }
 
             if (complete)
             {
+                List<VectorInfo> list = new();
+
                 foreach (var item in _minoDic.Keys)
                 {
                     if (item.Current.y == -i)
                     {
                         Destroy(_minoDic[item]);
-                        _minoDic.Remove(item);
+                        list.Add(item);
                     }
                 }
 
+                foreach (var it in list)
+                    _minoDic.Remove(it);
+
                 //下につめる
                 foreach (var item in _minoDic.Keys)
-                {
                     if (item.Current.y > -i)
                         item.MoveVector();
-                }
+
+                //念のため盤面を更新
+                EventBus.Publish<UpdatePositionEvent>(new UpdatePositionEvent(SendPosition()));
             }
         }
     }
@@ -85,6 +84,7 @@ public class OperateBlock : MonoBehaviour
     protected void FallDown()
     {
         foreach (var item in _minoDic.Keys)
+
             _minoDic[item].transform.DOMove(new Vector3(item.Current.x, item.Current.y, 0), 2f);
     }
 
@@ -93,15 +93,13 @@ public class OperateBlock : MonoBehaviour
         List<Vector2> pList = new();
 
         foreach (var item in _minoDic.Keys)
-        {
             pList.Add(item.Current);
-           // Debug.Log($"{item.Current.x},{item.Current.y}");
-        }
+
         return pList;
     }
 }
 
-public struct VectorInfo
+public class VectorInfo
 {
     public Vector2 Current { get; private set; }
 
