@@ -1,6 +1,5 @@
 using Cysharp.Threading.Tasks;
 using System;
-using UnityEngine;
 
 /// <summary>
 /// 確認マネージャー
@@ -12,10 +11,7 @@ public class ConfirmManager : MinoConfirm, IStateEvent
 
     public event Action<StateEnum> StateChanged;
 
-    public void Starter()
-    {
-        WaitFinish().Forget();
-    }
+    public void Starter() => WaitFinish().Forget();
 
     private void Awake()
     {
@@ -25,26 +21,33 @@ public class ConfirmManager : MinoConfirm, IStateEvent
 
     private void OnEnable()
     {
-        EventBus.Subscribe<UpdatePositionEvent>(this, ReceivePosition);
+        EventBus.Subscribe<SendPositionEvent>(this, ReceivePosition);
+        EventBus.Subscribe<UpdatePositionEvent>(this, UpdatePosition);
     }
 
-    private void OnDisable()
-    {
-        EventBus.AllUnSubscribe(this);
-    }
+    private void OnDisable() => EventBus.AllUnSubscribe(this);
 
     /// <summary>
-    /// もらったVector2の配列を代入し送信
+    /// 置いたのを受け取る
     /// </summary>
     /// <param name="c"></param>
-    private void ReceivePosition(UpdatePositionEvent c)
+    private void ReceivePosition(SendPositionEvent c)
     {
-        foreach (var e in c._positions)
-        {
-            UpdateArray(e, true);
-        }
-        EventBus.Publish<SendArrayEvent>(new SendArrayEvent(MArraySetting));
+        foreach (var v in c._positions)
+            UpdateArray(v);
         _isStart = true;
+    }
+
+
+    /// <summary>
+    /// 全ての位置を受け取り、更新
+    /// </summary>
+    /// <param name="u"></param>
+    private void UpdatePosition(UpdatePositionEvent u)
+    {
+        ResetArray();
+        foreach (var e in u._update)
+            UpdateArray(e);
     }
 
     private async UniTask WaitFinish()

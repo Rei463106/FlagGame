@@ -35,12 +35,13 @@ public class StateMachine : MonoBehaviour
     /// <param name="next"></param>
     private void Progress(StateEnum next)
     {
-        if (next != StateEnum.None)
-        {
-            _stateDic[next].StateChanged += Progress;
-            _stateDic[next].Starter();
-        }
         _stateDic[_currentState].StateChanged -= Progress;
         _currentState = next;
+
+        if (_currentState != StateEnum.None)
+        {
+            _stateDic[_currentState].StateChanged += Progress;
+            _stateDic[_currentState].Starter();
+        }
     }
 }

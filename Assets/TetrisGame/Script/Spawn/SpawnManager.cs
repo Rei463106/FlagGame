@@ -1,37 +1,33 @@
-using UnityEngine;
 using System;
+using UnityEngine;
 
 /// <summary>
 /// Minoをスポーンさせる処理
 /// </summary>
-public class SpawnManager : MinoPool, IStateEvent
+public class SpawnManager : MinoSelect, IStateEvent
 {
     public event Action<StateEnum> StateChanged;
 
     public StateEnum State => StateEnum.Spawn;
 
-    private void Awake()
+    private void Awake() => StateMachine.Entry<SpawnManager>(this);
+
+
+    public void DebugSubscribers()
     {
-        PleaseAwake();
-        StateMachine.Entry<SpawnManager>(this);
+        Debug.Log(StateChanged?.GetInvocationList().Length ?? 0);
     }
 
-    public void SpawnTurn()
+    public void Starter()
     {
-        var o = _iPool.Get();
+        var o = MakeMino();
 
         if (o.TryGetComponent<DoorMino>(out var d))
         {
             if (d == null) return;
             var enterMino = d;
-            enterMino.Enter(() => _iPool.Release(o));
+            enterMino.Enter(() => Destroy(o));
         }
-
         StateChanged?.Invoke(StateEnum.Confirm);
-    }
-
-    public void Starter()
-    {
-        SpawnTurn();
     }
 }

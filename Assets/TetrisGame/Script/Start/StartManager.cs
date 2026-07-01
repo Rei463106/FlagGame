@@ -1,4 +1,3 @@
-
 using Cysharp.Threading.Tasks;
 using System;
 
@@ -20,6 +19,8 @@ public class StartManager : StartDirection, IStateEvent
     private async UniTask WaitDirection()
     {
         await UniTask.WaitUntil(() => _isFinish);
-        StateChanged?.Invoke(StateEnum.Spawn);//次のステートへ…
+
+        _isFinish = false;
+        StateChanged?.Invoke(StateEnum.Spawn);
     }
 }
