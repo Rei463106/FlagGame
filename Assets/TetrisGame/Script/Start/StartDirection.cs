@@ -6,10 +6,7 @@ public class StartDirection : MonoBehaviour
 {
     protected bool _isFinish;
 
-    private void Start()
-    {
-        Direction();
-    }
+    private void Start() => Direction();
 
     private void Direction() => DirectionBase().Forget();
 

@@ -77,7 +77,13 @@ public class MoveMino : DoorMino
     private void FinishAction()
     {
         _pushType = PushType.None;
-        EventBus.Publish<UpdatePositionEvent>(new UpdatePositionEvent(_currentPos));
+        EventBus.Publish<SendPositionEvent>(new SendPositionEvent(_currentPos));
+
+        foreach(var f in _currentPos)
+        {
+            Debug.Log(f);
+        }
+
         Delete();
     }
 
@@ -250,11 +256,6 @@ public class MoveMino : DoorMino
                 transform.RotateAround(_rotate.position, Vector3.forward, -90f);
                 _currentPos.Clear();
                 _currentPos.AddRange(vList);
-
-                foreach (var v in _currentPos)
-                {
-                    Debug.Log(v);
-                }
             }
         }
     }
@@ -309,6 +310,7 @@ public class MoveMino : DoorMino
     /// <returns></returns>
     private async UniTask UnderConfirm()
     {
+        Debug.Log("呼ばれ増してる");
         if (!_isRun)//念のため、同時に走らないように
         {
             _isRun = true;

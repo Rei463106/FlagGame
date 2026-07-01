@@ -12,7 +12,7 @@ public class MinoArray : MonoBehaviour
 
     private static MinoArraySetting[,] _minoArray;
 
-    protected static MinoArraySetting[,] MArraySetting => _minoArray;
+    public static MinoArraySetting[,] MArraySetting => _minoArray;
 
     /// <summary>配列の作成</summary>
     protected void PleaseAwake()
@@ -28,17 +28,45 @@ public class MinoArray : MonoBehaviour
         }
     }
 
-    //ここにアクセスできるクラスは制限したい
-    protected void UpdateArray(Vector2 v, bool b)
+    private void Update()
+    {
+        foreach (var item in _minoArray)
+        {
+            if (item.IsExist)
+            {
+                Debug.Log(item._wallBlock);
+            }
+            else
+            {
+                Debug.Log("ない" + item._wallBlock);
+            }
+        }
+
+    }
+
+    /// <summary>
+    /// 対象だけtrueにする
+    /// </summary>
+    /// <param name="v"></param>
+    protected void UpdateArray(Vector2 v)
     {
         foreach (var m in _minoArray)
         {
             if (m._wallBlock == v)
             {
-                m.ChangeExist(b);
+                m.ChangeExist(true);
                 break;
             }
         }
+    }
+
+    /// <summary>
+    /// 一旦全部falseにする
+    /// </summary>
+    protected void ResetArray()
+    {
+        foreach (var item in _minoArray)
+            item.ChangeExist(false);
     }
 }
 

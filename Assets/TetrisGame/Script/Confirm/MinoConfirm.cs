@@ -44,10 +44,6 @@ public class MinoConfirm : MinoArray
 
         foreach (var item in MArraySetting)
         {
-            if (item == null)
-            {
-                break;
-            }
             if (item._wallBlock == new Vector2(v.x, y) && !item.IsExist)
             {
                 return true;
@@ -105,7 +101,6 @@ public class MinoConfirm : MinoArray
             if (item._wallBlock == new Vector2(fx, fy) && !item.IsExist)
             {
                 result = new Vector2(fx, fy);
-                Debug.Log($"{result.x},{result.y}");
                 return true;
             }
         }
