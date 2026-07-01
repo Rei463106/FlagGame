@@ -23,15 +23,9 @@ public class MoveMino : DoorMino
     private CancellationTokenSource _source;
     private CancellationToken _token;
 
-    private void OnEnable()
-    {
-        InsideEnterAction += EnterAction;
-    }
+    private void OnEnable() => InsideEnterAction += EnterAction;
 
-    private void OnDisable()
-    {
-        InsideEnterAction -= EnterAction;
-    }
+    private void OnDisable() => InsideEnterAction -= EnterAction;
 
     /// <summary>
     /// 入力受付
@@ -77,7 +71,7 @@ public class MoveMino : DoorMino
     private void FinishAction()
     {
         _pushType = PushType.None;
-        EventBus.Publish<SendPositionEvent>(new SendPositionEvent(_currentPos));
+        EventBus.Publish<SendPositionEvent>(new SendPositionEvent(_currentPos, _mino.SpawnSprite));
         Delete();
     }
 
@@ -304,14 +298,13 @@ public class MoveMino : DoorMino
     /// <returns></returns>
     private async UniTask UnderConfirm()
     {
-        Debug.Log("呼ばれ増してる");
         if (!_isRun)//念のため、同時に走らないように
         {
             _isRun = true;
             _source.Cancel();
             bool isGoing = true;
 
-            await UniTask.Delay(TimeSpan.FromSeconds(1f));//1秒だけ待って確かめ
+            await UniTask.Delay(TimeSpan.FromSeconds(0.5f));
 
             foreach (var v in _currentPos)
             {

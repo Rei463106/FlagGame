@@ -5522,6 +5522,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::SpawnManager
   _minoPrefab:
   - {fileID: 3700012656808327705, guid: b78b45ba8a049c544b6ccfa35df582f1, type: 3}
+  - {fileID: 5623113319413811964, guid: 8e5f5b8250f168146a306c76c4260095, type: 3}
+  - {fileID: 8132151280648723654, guid: dc4c00ae375bbd04c87c666f123d0ec0, type: 3}
+  - {fileID: 9848264863123311, guid: c3e454bf04963304ea181ed290aa4a40, type: 3}
+  - {fileID: 5144506817231847568, guid: 5ee69847a1e0a33459b9cc3bca7a230e, type: 3}
+  - {fileID: 6266653359563066650, guid: a258246b9250f6443b7288237af023d9, type: 3}
+  - {fileID: 2143782153951949637, guid: 7202bdcb91c23714c890152c55745f60, type: 3}
 --- !u!1 &1969824675
 GameObject:
   m_ObjectHideFlags: 0

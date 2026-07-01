@@ -10,13 +10,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5c0deefd29f8f4b4f9ac1501817566c3, type: 3}
-  m_Name: IMino
+  m_Name: TMino
   m_EditorClassIdentifier: Assembly-CSharp::Mino
   _spawnPosition: {x: 4, y: -2}
-  _displaceRotate: {x: -0.5, y: -1.5}
+  _displaceRotate: {x: 0, y: -1}
   _setting:
   - _diaplacePosition: {x: 0, y: 0}
   - _diaplacePosition: {x: 0, y: -1}
-  - _diaplacePosition: {x: 0, y: -2}
-  - _diaplacePosition: {x: 0, y: -3}
-  _sprite: {fileID: 21300000, guid: 5f58b4966e56ff4438d95d2003430499, type: 3}
+  - _diaplacePosition: {x: 1, y: -1}
+  - _diaplacePosition: {x: -1, y: -1}
+  _sprite: {fileID: 21300000, guid: 92baa5f96ef32f94497daf6d09a17009, type: 3}
