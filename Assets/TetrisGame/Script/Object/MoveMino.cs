@@ -251,6 +251,7 @@ public class MoveMino : DoorMino
     /// <summary>自動落下</summary>
     private async UniTask AutoFall(CancellationToken token)
     {
+        await UniTask.Delay(TimeSpan.FromSeconds(0.5f), cancellationToken: token);
         try
         {
             while (!_token.IsCancellationRequested)

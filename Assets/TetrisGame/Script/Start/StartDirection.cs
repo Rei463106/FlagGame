@@ -12,7 +12,7 @@ public class StartDirection : MonoBehaviour
 
     private async UniTask DirectionBase()
     {
-        await UniTask.Delay(TimeSpan.FromSeconds(4));
+        await UniTask.Delay(TimeSpan.FromSeconds(2));
         _isFinish = true;
     }
 }

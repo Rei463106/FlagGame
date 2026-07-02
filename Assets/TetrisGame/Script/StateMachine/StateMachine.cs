@@ -14,10 +14,7 @@ public class StateMachine : MonoBehaviour
     /// </summary>
     /// <typeparam name="T"></typeparam>
     /// <param name="obj"></param>
-    public static void Entry<T>(T obj) where T : class, IStateEvent
-    {
-        _stateDic?.TryAdd(obj.State, obj);
-    }
+    public static void Entry<T>(T obj) where T : class, IStateEvent => _stateDic?.TryAdd(obj.State, obj);
 
     /// <summary>
     /// 一番最初に発火させる

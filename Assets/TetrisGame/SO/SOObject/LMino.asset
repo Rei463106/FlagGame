@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5c0deefd29f8f4b4f9ac1501817566c3, type: 3}
   m_Name: LMino
   m_EditorClassIdentifier: Assembly-CSharp::Mino
-  _spawnPosition: {x: 4, y: -2}
+  _spawnPosition: {x: 4, y: -1}
   _displaceRotate: {x: 0, y: -1}
   _setting:
   - _diaplacePosition: {x: 0, y: 0}
