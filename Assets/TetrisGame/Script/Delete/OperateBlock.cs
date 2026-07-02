@@ -9,8 +9,12 @@ public class OperateBlock : MonoBehaviour
 {
     [Header("Prefab")]
     [SerializeField] private GameObject _minoprefab;
+    [Header("置ける範囲の限界")]
+    [SerializeField] private float _maxPut;
 
     private readonly Dictionary<VectorInfo, GameObject> _minoDic = new();//位置とブロックの辞書
+    protected bool IsOver { get; private set; }
+    private int _dCombo;
 
     private void OnEnable() => EventBus.Subscribe<SendPositionEvent>(this, ReceiveArray);
     private void OnDisable() => EventBus.AllUnSubscribe(this);
@@ -23,11 +27,16 @@ public class OperateBlock : MonoBehaviour
     {
         foreach (var item in s._positions)
         {
-            var i = Instantiate(_minoprefab);
-            i.transform.position = item;
-            i.GetComponent<SpriteRenderer>().sprite = s._sprite;
-            VectorInfo info = new(item);
-            _minoDic?.TryAdd(info, i);
+            if (item.y <= _maxPut)
+            {
+                var i = Instantiate(_minoprefab);
+                i.transform.position = item;
+                i.GetComponent<SpriteRenderer>().sprite = s._sprite;
+                VectorInfo info = new(item);
+                _minoDic?.TryAdd(info, i);
+            }
+            else//ゲームオーバーへ
+                IsOver = true;
         }
     }
 
@@ -37,6 +46,8 @@ public class OperateBlock : MonoBehaviour
     protected void DeleteArray()
     {
         var d = MinoArray.MArraySetting;
+        int dLine = 0;
+        bool combo = false;
 
         for (int i = 0; i < d.GetLength(0); i++)
         {
@@ -53,6 +64,9 @@ public class OperateBlock : MonoBehaviour
 
             if (complete)
             {
+                combo = true;
+                dLine++;
+
                 List<VectorInfo> list = new();
 
                 foreach (var item in _minoDic.Keys)
@@ -76,6 +90,10 @@ public class OperateBlock : MonoBehaviour
                 EventBus.Publish<UpdatePositionEvent>(new UpdatePositionEvent(SendPosition()));
             }
         }
+
+        if (combo) _dCombo++;
+        else _dCombo = 0;
+        EventBus.Publish(new SendScoreEvent(dLine, _dCombo));
     }
 
     /// <summary>
@@ -85,10 +103,13 @@ public class OperateBlock : MonoBehaviour
     protected void FallDown()
     {
         foreach (var item in _minoDic.Keys)
-
-            _minoDic[item].transform.DOMove(new Vector3(item.Current.x, item.Current.y, 0), 1f);
+            _minoDic[item].transform.DOMove(new Vector3(item.Current.x, item.Current.y, 0), 1f).SetEase(Ease.Linear);
     }
 
+    /// <summary>
+    /// 現在の辞書の中身を全て取得
+    /// </summary>
+    /// <returns></returns>
     protected List<Vector2> SendPosition()
     {
         List<Vector2> pList = new();

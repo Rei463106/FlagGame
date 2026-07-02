@@ -13,11 +13,16 @@ public class DeleteManager : OperateBlock, IStateEvent
 
     private async UniTask DeleteDirection()
     {
-        DeleteArray();
-        await UniTask.NextFrame(); // これ重要
-        FallDown();
-        await UniTask.Delay(TimeSpan.FromSeconds(1f));
-        EventBus.Publish<UpdatePositionEvent>(new UpdatePositionEvent(SendPosition()));
-        StateChanged?.Invoke(StateEnum.Spawn);
+        if (!IsOver)
+        {
+            DeleteArray();
+            await UniTask.NextFrame(); // これ重要
+            FallDown();
+            await UniTask.Delay(TimeSpan.FromSeconds(1f));
+            EventBus.Publish<UpdatePositionEvent>(new UpdatePositionEvent(SendPosition()));
+            StateChanged?.Invoke(StateEnum.Spawn);
+        }
+        else
+            StateChanged?.Invoke(StateEnum.Finish);
     }
 }
