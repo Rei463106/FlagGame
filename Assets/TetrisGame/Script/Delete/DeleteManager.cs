@@ -23,6 +23,11 @@ public class DeleteManager : OperateBlock, IStateEvent
             StateChanged?.Invoke(StateEnum.Spawn);
         }
         else
+        {
+            EventBus.Publish<PutOverEvent>(new PutOverEvent());
             StateChanged?.Invoke(StateEnum.Finish);
+        }
     }
 }
+
+public readonly struct PutOverEvent : IGameEvent { }

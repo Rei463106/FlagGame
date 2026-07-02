@@ -11,6 +11,8 @@ public class MoveMino : DoorMino
     [SerializeField] private Mino _mino;
     [Header("回転軸")]
     [SerializeField] private Transform _rotate;
+    [Header("自分自身")]
+    [SerializeField] private GameObject _myObject;
 
     private readonly List<Vector2> _currentPos = new();
     private Vector2 _currentRotatePos;
@@ -23,9 +25,17 @@ public class MoveMino : DoorMino
     private CancellationTokenSource _source;
     private CancellationToken _token;
 
-    private void OnEnable() => InsideEnterAction += EnterAction;
+    private void OnEnable()
+    {
+        InsideEnterAction += EnterAction;
+        EventBus.Subscribe<TimerEvent>(this, ReceiveTimer);
+    }
 
-    private void OnDisable() => InsideEnterAction -= EnterAction;
+    private void OnDisable()
+    {
+        InsideEnterAction -= EnterAction;
+        EventBus.AllUnSubscribe(this);
+    }
 
     /// <summary>
     /// 入力受付
@@ -73,6 +83,13 @@ public class MoveMino : DoorMino
         _pushType = PushType.None;
         EventBus.Publish<SendPositionEvent>(new SendPositionEvent(_currentPos, _mino.SpawnSprite));
         Delete();
+    }
+
+    /// <summary>時間切れ</summary>
+    private void ReceiveTimer(TimerEvent t)
+    {
+        _source.Cancel();
+        Destroy(_myObject);
     }
 
     /// <summary>

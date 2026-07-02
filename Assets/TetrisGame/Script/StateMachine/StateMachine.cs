@@ -8,6 +8,9 @@ public class StateMachine : MonoBehaviour
 
     private static readonly Dictionary<StateEnum, IStateEvent> _stateDic = new();
 
+    private void OnEnable() => EventBus.Subscribe<TimerEvent>(this, ForceState);
+    private void OnDisable() => EventBus.AllUnSubscribe(this);
+
     /// <summary>
     ///登録用
     ///あくまでそのステートを発火させるだけ用
@@ -40,5 +43,13 @@ public class StateMachine : MonoBehaviour
             _stateDic[_currentState].StateChanged += Progress;
             _stateDic[_currentState].Starter();
         }
+    }
+
+    private void ForceState(TimerEvent t)
+    {
+        _stateDic[_currentState].StateChanged -= Progress;
+        _currentState = StateEnum.Finish;
+        _stateDic[_currentState].StateChanged += Progress;
+        _stateDic[_currentState].Starter();
     }
 }

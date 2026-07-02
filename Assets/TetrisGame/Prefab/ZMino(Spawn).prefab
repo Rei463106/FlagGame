@@ -475,6 +475,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::MoveMino
   _mino: {fileID: 11400000, guid: 2f6944a93f6167d4eae7f090d4a3740e, type: 2}
   _rotate: {fileID: 3499061522363455968}
+  _myObject: {fileID: 5144506817231847568}
 --- !u!1 &6962833741732799694
 GameObject:
   m_ObjectHideFlags: 0

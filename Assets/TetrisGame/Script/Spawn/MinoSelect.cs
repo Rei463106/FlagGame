@@ -9,8 +9,15 @@ public class MinoSelect : MonoBehaviour
     [Header("GameObjects")]
     [SerializeField] private List<GameObject> _minoPrefab = new();
 
+    private int _preNumber = -1;
+
     protected GameObject MakeMino()//スポーン時に呼ぶ
     {
-        return Instantiate(_minoPrefab[Random.Range(0, _minoPrefab.Count)]);
+        if (_preNumber < _minoPrefab.Count - 1)
+            _preNumber++;
+        else
+            _preNumber = 0;
+
+        return Instantiate(_minoPrefab[_preNumber]);
     }
 }
