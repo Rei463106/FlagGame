@@ -21,6 +21,9 @@ public class StartManager : StartDirection, IStateEvent
         await UniTask.WaitUntil(() => _isFinish);
 
         _isFinish = false;
+        EventBus.Publish<StartEvent>(new StartEvent());
         StateChanged?.Invoke(StateEnum.Spawn);
     }
 }
+
+public readonly struct StartEvent : IGameEvent { }

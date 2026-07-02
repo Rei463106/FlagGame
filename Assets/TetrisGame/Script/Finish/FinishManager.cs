@@ -13,6 +13,6 @@ public class FinishManager : FinishDirection, IStateEvent
 
     private async UniTask WaitDirection()
     {
-        StateChanged?.Invoke(StateEnum.None);
+        //StateChanged?.Invoke(StateEnum.None);
     }
 }

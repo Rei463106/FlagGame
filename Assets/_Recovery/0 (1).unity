@@ -7279,7 +7279,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TimerManager
   _timerText: {fileID: 2133958348}
-  _timeLimit: 999
+  _timeLimit: 10
 --- !u!1 &2071264104
 GameObject:
   m_ObjectHideFlags: 0

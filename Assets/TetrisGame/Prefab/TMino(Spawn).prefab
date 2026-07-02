@@ -566,3 +566,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::MoveMino
   _mino: {fileID: 11400000, guid: 9263df5b0d40abb41bba1771a955a350, type: 2}
   _rotate: {fileID: 6530158011408184854}
+  _myObject: {fileID: 8132151280648723654}
