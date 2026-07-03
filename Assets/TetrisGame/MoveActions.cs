@@ -129,9 +129,18 @@ public partial class @MoveActions: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""RightLotate"",
+                    ""name"": ""RightRotate"",
                     ""type"": ""Button"",
                     ""id"": ""2b14de05-930f-4752-896c-712634a6f47e"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Hold"",
+                    ""type"": ""Button"",
+                    ""id"": ""0f0fb353-e73c-4df3-b0c4-27ffedc520ff"",
                     ""expectedControlType"": """",
                     ""processors"": """",
                     ""interactions"": """",
@@ -190,7 +199,18 @@ public partial class @MoveActions: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""RightLotate"",
+                    ""action"": ""RightRotate"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""5e2436db-cf77-4596-8e20-bef8bbd7e4e2"",
+                    ""path"": ""<Keyboard>/shift"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Hold"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -205,7 +225,8 @@ public partial class @MoveActions: IInputActionCollection2, IDisposable
         m_InputMove_Right = m_InputMove.FindAction("Right", throwIfNotFound: true);
         m_InputMove_Down = m_InputMove.FindAction("Down", throwIfNotFound: true);
         m_InputMove_LeftRotate = m_InputMove.FindAction("LeftRotate", throwIfNotFound: true);
-        m_InputMove_RightLotate = m_InputMove.FindAction("RightLotate", throwIfNotFound: true);
+        m_InputMove_RightRotate = m_InputMove.FindAction("RightRotate", throwIfNotFound: true);
+        m_InputMove_Hold = m_InputMove.FindAction("Hold", throwIfNotFound: true);
     }
 
     ~@MoveActions()
@@ -290,7 +311,8 @@ public partial class @MoveActions: IInputActionCollection2, IDisposable
     private readonly InputAction m_InputMove_Right;
     private readonly InputAction m_InputMove_Down;
     private readonly InputAction m_InputMove_LeftRotate;
-    private readonly InputAction m_InputMove_RightLotate;
+    private readonly InputAction m_InputMove_RightRotate;
+    private readonly InputAction m_InputMove_Hold;
     /// <summary>
     /// Provides access to input actions defined in input action map "InputMove".
     /// </summary>
@@ -319,9 +341,13 @@ public partial class @MoveActions: IInputActionCollection2, IDisposable
         /// </summary>
         public InputAction @LeftRotate => m_Wrapper.m_InputMove_LeftRotate;
         /// <summary>
-        /// Provides access to the underlying input action "InputMove/RightLotate".
+        /// Provides access to the underlying input action "InputMove/RightRotate".
         /// </summary>
-        public InputAction RightRotate => m_Wrapper.m_InputMove_RightLotate;
+        public InputAction @RightRotate => m_Wrapper.m_InputMove_RightRotate;
+        /// <summary>
+        /// Provides access to the underlying input action "InputMove/Hold".
+        /// </summary>
+        public InputAction @Hold => m_Wrapper.m_InputMove_Hold;
         /// <summary>
         /// Provides access to the underlying input action map instance.
         /// </summary>
@@ -360,9 +386,12 @@ public partial class @MoveActions: IInputActionCollection2, IDisposable
             @LeftRotate.started += instance.OnLeftRotate;
             @LeftRotate.performed += instance.OnLeftRotate;
             @LeftRotate.canceled += instance.OnLeftRotate;
-            RightRotate.started += instance.OnRightLotate;
-            RightRotate.performed += instance.OnRightLotate;
-            RightRotate.canceled += instance.OnRightLotate;
+            @RightRotate.started += instance.OnRightRotate;
+            @RightRotate.performed += instance.OnRightRotate;
+            @RightRotate.canceled += instance.OnRightRotate;
+            @Hold.started += instance.OnHold;
+            @Hold.performed += instance.OnHold;
+            @Hold.canceled += instance.OnHold;
         }
 
         /// <summary>
@@ -386,9 +415,12 @@ public partial class @MoveActions: IInputActionCollection2, IDisposable
             @LeftRotate.started -= instance.OnLeftRotate;
             @LeftRotate.performed -= instance.OnLeftRotate;
             @LeftRotate.canceled -= instance.OnLeftRotate;
-            RightRotate.started -= instance.OnRightLotate;
-            RightRotate.performed -= instance.OnRightLotate;
-            RightRotate.canceled -= instance.OnRightLotate;
+            @RightRotate.started -= instance.OnRightRotate;
+            @RightRotate.performed -= instance.OnRightRotate;
+            @RightRotate.canceled -= instance.OnRightRotate;
+            @Hold.started -= instance.OnHold;
+            @Hold.performed -= instance.OnHold;
+            @Hold.canceled -= instance.OnHold;
         }
 
         /// <summary>
@@ -458,11 +490,18 @@ public partial class @MoveActions: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnLeftRotate(InputAction.CallbackContext context);
         /// <summary>
-        /// Method invoked when associated input action "RightLotate" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// Method invoked when associated input action "RightRotate" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
         /// </summary>
         /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
-        void OnRightLotate(InputAction.CallbackContext context);
+        void OnRightRotate(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "Hold" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnHold(InputAction.CallbackContext context);
     }
 }

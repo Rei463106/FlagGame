@@ -1,4 +1,4 @@
-using System.Collections.Generic;
+using System;
 using UnityEngine;
 
 /// <summary>
@@ -7,17 +7,54 @@ using UnityEngine;
 public class MinoSelect : MonoBehaviour
 {
     [Header("GameObjects")]
-    [SerializeField] private List<GameObject> _minoPrefab = new();
+    [SerializeField] private MinoData[] _minoPrefabArray;
+    [Header("Next")]
+    [SerializeField] private SpriteRenderer _sp;
 
-    private int _preNumber = -1;
+    private int _preNumber;
 
-    protected GameObject MakeMino()//スポーン時に呼ぶ
+    protected void PleaseAwake() => FlowNext();
+
+    protected GameObject SendMino(out int number)//スポーン時に呼ぶ
     {
-        if (_preNumber < _minoPrefab.Count - 1)
-            _preNumber++;
-        else
-            _preNumber = 0;
-
-        return Instantiate(_minoPrefab[_preNumber]);
+        var p = _preNumber;
+        number = p;
+        FlowNext();
+        return _minoPrefabArray[p].MObject;
     }
+
+    protected GameObject HoldMino(int p)//ホールドしたものを出すときに呼ぶ
+    {
+        return _minoPrefabArray[p].MObject;
+    }
+
+    protected Sprite HoldSprite(int p)
+    {
+        return _minoPrefabArray[p].MSprite;
+    }
+
+    private void FlowNext()
+    {
+        _preNumber = SelectNumber();
+        DisplayMino();
+    }
+
+    private int SelectNumber()
+    {
+        return UnityEngine.Random.Range(0, _minoPrefabArray.Length);
+    }
+
+    private void DisplayMino() => _sp.sprite = _minoPrefabArray[_preNumber].MSprite;
+}
+
+[Serializable]
+public struct MinoData
+{
+    [Header("Prefab")]
+    [SerializeField] private GameObject _minoPrefab;
+    [Header("Sprite")]
+    [SerializeField] private Sprite _sprite;
+
+    public GameObject MObject => _minoPrefab;
+    public Sprite MSprite => _sprite;
 }

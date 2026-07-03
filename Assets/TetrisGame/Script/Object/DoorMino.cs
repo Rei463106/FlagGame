@@ -8,13 +8,15 @@ public class DoorMino : MonoBehaviour
 {
     private event Action EnterAction;
     protected event Action InsideEnterAction;
+    protected bool _isHold;
 
     /// <summary>
     /// 入室
     /// </summary>
     /// <param name="action"></param>
-    public void Enter(Action action)
+    public void Enter(bool hold, Action action)
     {
+        _isHold = hold;
         InsideEnterAction?.Invoke();
         EnterAction += action;
     }
