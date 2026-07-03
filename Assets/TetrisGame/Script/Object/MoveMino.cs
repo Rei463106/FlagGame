@@ -50,6 +50,7 @@ public class MoveMino : DoorMino
         _actions.InputMove.Down.started += OnDown;
         _actions.InputMove.LeftRotate.started += OnLeftRotate;
         _actions.InputMove.RightRotate.started += OnRightRotate;
+        _actions.InputMove.Hold.started += OnHold;
 
         _actions.Enable();
 
@@ -88,6 +89,20 @@ public class MoveMino : DoorMino
     /// <summary>時間切れ</summary>
     private void ReceiveTimer(TimerEvent t)
     {
+        _source.Cancel();
+        Destroy(_myObject);
+    }
+
+    /// <summary>
+    /// ホールド
+    /// </summary>
+    /// <param name="context"></param>
+    private void OnHold(InputAction.CallbackContext context)
+    {
+        if (_isHold)
+            return;
+
+        EventBus.Publish<HoldAction>(new HoldAction());
         _source.Cancel();
         Destroy(_myObject);
     }
@@ -355,3 +370,5 @@ public enum PushType
     All,
     ProUnder
 }
+
+public readonly struct HoldAction : IGameEvent { }
