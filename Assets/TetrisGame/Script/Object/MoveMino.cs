@@ -25,15 +25,19 @@ public class MoveMino : DoorMino
     private CancellationTokenSource _source;
     private CancellationToken _token;
 
+    private event Action MoveAction;
+
     private void OnEnable()
     {
         InsideEnterAction += EnterAction;
+        MoveAction += PlayClip;
         EventBus.Subscribe<TimerEvent>(this, ReceiveTimer);
     }
 
     private void OnDisable()
     {
         InsideEnterAction -= EnterAction;
+        MoveAction -= PlayClip;
         EventBus.AllUnSubscribe(this);
     }
 
@@ -42,6 +46,8 @@ public class MoveMino : DoorMino
     /// </summary>
     private void Awake()
     {
+        PleaseAwake();
+
         //入力
         _actions = new MoveActions();
 
@@ -113,6 +119,7 @@ public class MoveMino : DoorMino
     /// <param name="context"></param>
     private void OnLeft(InputAction.CallbackContext context)
     {
+        MoveAction.Invoke();
         if (_pushType != PushType.None)
         {
             bool isGoing = true;
@@ -149,6 +156,7 @@ public class MoveMino : DoorMino
     /// <param name="context"></param>
     private void OnRight(InputAction.CallbackContext context)
     {
+        MoveAction.Invoke();
         if (_pushType != PushType.None)
         {
             bool isGoing = true;
@@ -186,6 +194,7 @@ public class MoveMino : DoorMino
     /// <param name="context"></param>
     private void OnDown(InputAction.CallbackContext context)
     {
+        MoveAction.Invoke();
         if (_pushType == PushType.All)
         {
             bool isGoing = true;
@@ -224,6 +233,7 @@ public class MoveMino : DoorMino
     /// <param name="context"></param>
     private void OnLeftRotate(InputAction.CallbackContext context)
     {
+        MoveAction.Invoke();
         if (_pushType != PushType.None)
         {
             bool isGoing = true;
@@ -255,6 +265,7 @@ public class MoveMino : DoorMino
     /// <param name="context"></param>
     private void OnRightRotate(InputAction.CallbackContext context)
     {
+        MoveAction.Invoke();
         if (_pushType != PushType.None)
         {
             bool isGoing = true;

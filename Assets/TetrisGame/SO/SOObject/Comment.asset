@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 666e2395cb97893449e10fdb35098533, type: 3}
+  m_Name: Comment
+  m_EditorClassIdentifier: Assembly-CSharp::Comment
+  _sprite:
+  - {fileID: 0}
+  _specialSprite: {fileID: 0}
+  _comboComment:
+  - "\u305D\u306E\u8ABF\u5B50\uFF01"
+  - "\u304B\u306A\u308A\u826F\u3044\u3088\uFF01"
+  - "\u306A\u304B\u306A\u304B\u3060\u306D\u3063"
+  _deleteComment:
+  - "\u304C\u3093\u3070\u308C\uFF01"
+  - "\u3042\u305B\u3089\u305A\u884C\u3053\u3046\u3063"
+  - "\u3044\u3044\u611F\u3058\uFF01"
+  _fcomboComment: "\u3059\u3063\u3054\u30FC\u3044\uFF01\uFF01\u611F\u52D5\u3060\u3088\u3063\uFF01 "
+  _tComment: "\u30C6\u30C8\u30EA\u30B9\u3060\u306D\u3063\uFF01"

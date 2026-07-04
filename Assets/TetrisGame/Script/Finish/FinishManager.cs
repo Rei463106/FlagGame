@@ -13,6 +13,8 @@ public class FinishManager : FinishDirection, IStateEvent
 
     private async UniTask WaitDirection()
     {
-        //StateChanged?.Invoke(StateEnum.None);
+        Direction();
+        await UniTask.WaitUntil(() => _isFinish);
+        //画面暗転するなりなんなり
     }
 }
