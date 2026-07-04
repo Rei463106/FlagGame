@@ -1,10 +1,9 @@
 using System;
-using UnityEngine;
 
 /// <summary>
 /// Minoの入退室管理
 /// </summary>
-public class DoorMino : MonoBehaviour
+public class DoorMino : MinoSound
 {
     private event Action EnterAction;
     protected event Action InsideEnterAction;
