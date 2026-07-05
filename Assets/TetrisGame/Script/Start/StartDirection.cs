@@ -51,9 +51,8 @@ public class StartDirection : MonoBehaviour
 
         _callText.text = "Start!!";
         _source.PlayOneShot(_clip);
-        await UniTask.Delay(TimeSpan.FromSeconds(2f));
+        await UniTask.Delay(TimeSpan.FromSeconds(1f));
         _callText.text = "";
-        _text.text = "";
         _isFinish = true;
     }
 
