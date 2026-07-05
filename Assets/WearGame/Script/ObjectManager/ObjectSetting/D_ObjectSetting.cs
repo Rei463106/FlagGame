@@ -39,10 +39,10 @@ internal class D_ObjectSetting
     /// <summary>
     /// マウスが離された時
     /// </summary>
-    public void RevertMouse(Vector2 vector2)
+    public void RevertMouse()
     {
         EventBus.Publish<DragGiveRevertEvent>(new DragGiveRevertEvent());
-        EventBus.Publish<RevertMouseEvent>(new RevertMouseEvent(vector2));
+        EventBus.Publish<RevertMouseEvent>(new RevertMouseEvent());
         _isComplete = true;//完了を知らせる
     }
 

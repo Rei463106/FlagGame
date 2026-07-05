@@ -577,7 +577,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 328367227}
-  - component: {fileID: 328367228}
   m_Layer: 0
   m_Name: Colliders
   m_TagString: Untagged
@@ -603,35 +602,6 @@ Transform:
   - {fileID: 595000391}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &328367228
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 328367226}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c8b3f1b917cc77c4eb4460aa2a72c871, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::R_ColliderManager
-  _settings:
-    _setting:
-    - _parts: 0
-      _setting:
-        _sp: {fileID: 1689965227}
-        _setting: {fileID: 1689965229}
-        _colliderSetting: {fileID: 1689965228}
-    - _parts: 1
-      _setting:
-        _sp: {fileID: 695882070}
-        _setting: {fileID: 695882072}
-        _colliderSetting: {fileID: 695882071}
-    - _parts: 2
-      _setting:
-        _sp: {fileID: 1729187245}
-        _setting: {fileID: 1729187247}
-        _colliderSetting: {fileID: 1729187246}
 --- !u!1 &379276755
 GameObject:
   m_ObjectHideFlags: 0
@@ -735,7 +705,11 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 328367227}
     m_Modifications:
-    - target: {fileID: 506046413670787300, guid: 3cce9ff9c52d9d544aaef20925755d9c, type: 3}
+    - target: {fileID: -6592477666810801235, guid: 3cce9ff9c52d9d544aaef20925755d9c, type: 3}
+      propertyPath: _myParts
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
       propertyPath: _myParts
       value: 1
       objectReference: {fileID: 0}
@@ -743,7 +717,7 @@ PrefabInstance:
       propertyPath: m_Name
       value: Body
       objectReference: {fileID: 0}
-    - target: {fileID: 7625344066413723852, guid: 3cce9ff9c52d9d544aaef20925755d9c, type: 3}
+    - target: {fileID: 0}
       propertyPath: _myParts
       value: 1
       objectReference: {fileID: 0}
@@ -1196,7 +1170,11 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 328367227}
     m_Modifications:
-    - target: {fileID: 506046413670787300, guid: 3cce9ff9c52d9d544aaef20925755d9c, type: 3}
+    - target: {fileID: -6592477666810801235, guid: 3cce9ff9c52d9d544aaef20925755d9c, type: 3}
+      propertyPath: _myParts
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
       propertyPath: _myParts
       value: 2
       objectReference: {fileID: 0}
@@ -1204,7 +1182,7 @@ PrefabInstance:
       propertyPath: m_Name
       value: Foot
       objectReference: {fileID: 0}
-    - target: {fileID: 7625344066413723852, guid: 3cce9ff9c52d9d544aaef20925755d9c, type: 3}
+    - target: {fileID: 0}
       propertyPath: _myParts
       value: 2
       objectReference: {fileID: 0}
@@ -1459,33 +1437,6 @@ Transform:
   - {fileID: 140526190}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!212 &695882070 stripped
-SpriteRenderer:
-  m_CorrespondingSourceObject: {fileID: 4041235133476683887, guid: 3cce9ff9c52d9d544aaef20925755d9c, type: 3}
-  m_PrefabInstance: {fileID: 398483881}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &695882071 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 7625344066413723852, guid: 3cce9ff9c52d9d544aaef20925755d9c, type: 3}
-  m_PrefabInstance: {fileID: 398483881}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4cb7e609da61ff44a878acf78cddccfe, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::L_ColliderSetting
---- !u!114 &695882072 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 506046413670787300, guid: 3cce9ff9c52d9d544aaef20925755d9c, type: 3}
-  m_PrefabInstance: {fileID: 398483881}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: eaf42ef3ab385bf40b7b32409276d726, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::R_ColliderSetting
 --- !u!1001 &707421967
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2745,6 +2696,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: Head
       objectReference: {fileID: 0}
+    - target: {fileID: 6891377593204764394, guid: 3cce9ff9c52d9d544aaef20925755d9c, type: 3}
+      propertyPath: m_SpriteTilingProperty.oldSize.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6891377593204764394, guid: 3cce9ff9c52d9d544aaef20925755d9c, type: 3}
+      propertyPath: m_SpriteTilingProperty.oldSize.y
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7965700993691024216, guid: 3cce9ff9c52d9d544aaef20925755d9c, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0.68
@@ -2921,33 +2880,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1629426661}
   m_CullTransparentMesh: 1
---- !u!212 &1689965227 stripped
-SpriteRenderer:
-  m_CorrespondingSourceObject: {fileID: 4041235133476683887, guid: 3cce9ff9c52d9d544aaef20925755d9c, type: 3}
-  m_PrefabInstance: {fileID: 1467463843}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &1689965228 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 7625344066413723852, guid: 3cce9ff9c52d9d544aaef20925755d9c, type: 3}
-  m_PrefabInstance: {fileID: 1467463843}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4cb7e609da61ff44a878acf78cddccfe, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::L_ColliderSetting
---- !u!114 &1689965229 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 506046413670787300, guid: 3cce9ff9c52d9d544aaef20925755d9c, type: 3}
-  m_PrefabInstance: {fileID: 1467463843}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: eaf42ef3ab385bf40b7b32409276d726, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::R_ColliderSetting
 --- !u!1 &1722033790
 GameObject:
   m_ObjectHideFlags: 0
@@ -2994,33 +2926,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::L_GameFinish
   _canvas: {fileID: 1010825485}
   _image: {fileID: 411567976}
---- !u!212 &1729187245 stripped
-SpriteRenderer:
-  m_CorrespondingSourceObject: {fileID: 4041235133476683887, guid: 3cce9ff9c52d9d544aaef20925755d9c, type: 3}
-  m_PrefabInstance: {fileID: 595000389}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &1729187246 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 7625344066413723852, guid: 3cce9ff9c52d9d544aaef20925755d9c, type: 3}
-  m_PrefabInstance: {fileID: 595000389}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4cb7e609da61ff44a878acf78cddccfe, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::L_ColliderSetting
---- !u!114 &1729187247 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 506046413670787300, guid: 3cce9ff9c52d9d544aaef20925755d9c, type: 3}
-  m_PrefabInstance: {fileID: 595000389}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: eaf42ef3ab385bf40b7b32409276d726, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::R_ColliderSetting
 --- !u!1 &1891678878
 GameObject:
   m_ObjectHideFlags: 0

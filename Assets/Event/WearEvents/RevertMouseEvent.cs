@@ -1,11 +1,4 @@
 using UnityEngine;
 
-internal readonly struct RevertMouseEvent : IGameEvent
-{
-    public readonly Vector2 _vector;
+internal readonly struct RevertMouseEvent : IGameEvent { }
 
-    public RevertMouseEvent(Vector2 vector)
-    {
-        _vector = vector;
-    }
-}
