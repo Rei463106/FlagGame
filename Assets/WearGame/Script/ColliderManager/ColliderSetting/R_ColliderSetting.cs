@@ -1,48 +1,88 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
 
-internal class R_ColliderSetting : MonoBehaviour
+public class R_ColliderSetting : MonoBehaviour
 {
-    [Header("自分のパーツ")]
+    [Header("自分のタイプ")]
     [SerializeField] private Parts _myParts;
+    [Header("SpriteRenderer")]
+    [SerializeField] private SpriteRenderer _sp;
+    [Header("Collider2D")]
+    [SerializeField] private Collider2D _co;
 
-    private ClothItem _item;
+    private bool _isOK;
+    private Sprite _oldSprite;
+    private ClothItem _myItem;
 
     private void OnEnable()
     {
-        EventBus.Subscribe<RevertMouseEvent>(this, ReceiveRevertMouse);
+        EventBus.Subscribe<DragGiveSettingEvent>(this, Reception);
+        EventBus.Subscribe<RevertMouseEvent>(this, ReceiveRevert);
+        EventBus.Subscribe<CorrectEvent>(this, ReceiveCorrect);
+        EventBus.Subscribe<DustBoxEvent>(this, ReceiveDustBox);
     }
 
-    private void OnDisable()
-    {
-        EventBus.AllUnSubscribe(this);
-    }
+    private void OnDisable() => EventBus.AllUnSubscribe(this);
 
-    /// <summary>
-    /// Managerから情報を受け取る
-    /// </summary>
-    public void ReceiveSettingInfo(ClothItem item)
+    private void Reception(DragGiveSettingEvent d)
     {
-        _item = item;
-    }
-
-    /// <summary>
-    /// 内外どっちで離されたかの判定
-    /// </summary>
-    /// <param name="r"></param>
-    private void ReceiveRevertMouse(RevertMouseEvent r)
-    {
-        if (_item != null && _item.Parts == _myParts)
+        if (d.Setting.Parts == _myParts)
         {
-            TryGetComponent<Collider2D>(out var c);
-            var left = c.bounds.min.x;
-            var right = c.bounds.max.x;
-            var bottom = c.bounds.min.y;
-            var top = c.bounds.max.y;
+            _isOK = true;
+            _myItem = d.Setting;
+        }
+        else
+            _isOK = false;
+    }
 
-            if (left <= r._vector.x && r._vector.x <= right && bottom <= r._vector.y && r._vector.y <= top)
+    private void ReceiveRevert(RevertMouseEvent r)
+    {
+        if (_isOK)
+        {
+            _isOK = false;
+            var left = _co.bounds.min.x;
+            var right = _co.bounds.max.x;
+            var bottom = _co.bounds.min.y;
+            var top = _co.bounds.max.y;
+
+            var mouse = Camera.main.ScreenToWorldPoint(Mouse.current.position.ReadValue());
+            Vector2 mousePos = new(mouse.x, mouse.y);
+
+            if (left <= mousePos.x && mousePos.x <= right && bottom <= mousePos.y && mousePos.y <= top)
+            {
+                _sp.sprite = _myItem.Sprite;
+                _oldSprite = _sp.sprite;
                 EventBus.Publish<ObjectInsideEvent>(new ObjectInsideEvent());
-            else
-                EventBus.Publish<ObjectOutsideEvent>(new ObjectOutsideEvent());
+            }
+        }
+    }
+
+    private void ReceiveCorrect(CorrectEvent c)
+    {
+        _oldSprite = null;
+        _sp.sprite = null;
+    }
+
+    private void ReceiveDustBox(DustBoxEvent d)
+    {
+        _oldSprite = null;
+        _sp.sprite = null;
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (_isOK)
+        {
+            collision.gameObject.GetComponent<SpriteRenderer>().enabled = false;
+            _sp.sprite = _myItem.Sprite;
+        }
+    }
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        if (_isOK)
+        {
+            collision.gameObject.GetComponent<SpriteRenderer>().enabled = true;
+            _sp.sprite = _oldSprite;
         }
     }
 }

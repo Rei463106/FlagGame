@@ -37,7 +37,7 @@ internal class R_ObjectSetting : MonoBehaviour
     public void DragMouse()
     {
         var mouse = Camera.main.ScreenToWorldPoint(Mouse.current.position.ReadValue());
-        Vector2 mousePos = new Vector2(mouse.x, mouse.y);
+        Vector2 mousePos = new(mouse.x, mouse.y);
         transform.position = mousePos;
     }
 
@@ -46,7 +46,7 @@ internal class R_ObjectSetting : MonoBehaviour
     /// </summary>
     public void RevertMouse()
     {
-        _setting.RevertMouse(transform.position);
+        _setting.RevertMouse();
         _isDrag = false;
     }
 

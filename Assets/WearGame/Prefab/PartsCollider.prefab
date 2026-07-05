@@ -12,8 +12,7 @@ GameObject:
   - component: {fileID: 4041235133476683887}
   - component: {fileID: 3117057087108543743}
   - component: {fileID: 6891377593204764394}
-  - component: {fileID: 506046413670787300}
-  - component: {fileID: 7625344066413723852}
+  - component: {fileID: -6592477666810801235}
   m_Layer: 0
   m_Name: PartsCollider
   m_TagString: Untagged
@@ -168,7 +167,7 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 1.5934744, y: 1.4965317}
   m_EdgeRadius: 0
---- !u!114 &506046413670787300
+--- !u!114 &-6592477666810801235
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -177,20 +176,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 5264243582573463363}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: eaf42ef3ab385bf40b7b32409276d726, type: 3}
+  m_Script: {fileID: 11500000, guid: 281b39c7bd7711f489d7215aa915397f, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::R_ColliderSetting
+  m_EditorClassIdentifier: Assembly-CSharp::R_ReColliderSetting
   _myParts: 0
---- !u!114 &7625344066413723852
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5264243582573463363}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4cb7e609da61ff44a878acf78cddccfe, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::L_ColliderSetting
-  _myParts: 0
+  _sp: {fileID: 4041235133476683887}
+  _co: {fileID: 6891377593204764394}
