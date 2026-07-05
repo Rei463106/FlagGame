@@ -20,7 +20,7 @@ MonoBehaviour:
     - _sprite: {fileID: 21300000, guid: afc686024f27e3844ab7c5c7f31c991e, type: 3}
       _comment: "\u308F\u305F\u3057\u306F\u3000              \u30CA\u30A4\u30F3"
     - _sprite: {fileID: 21300000, guid: 9e0c75f575b13dc48a7e6017eb326ec0, type: 3}
-      _comment: "\u3055\u3042\u4E00\u7DD2\u306B\u904A\u3073\u307E\u3057\u3087\u3046\uFF01 "
+      _comment: "\u3055\u3042\u3044\u3063\u3057\u3087\u306B\u904A\u3073\u307E\u3057\u3087\u3046\uFF01 "
     - _sprite: {fileID: 21300000, guid: a6ff3ee43aaaf9e4e9e2a45de907e207, type: 3}
       _comment: 
   - _talkType: 1
