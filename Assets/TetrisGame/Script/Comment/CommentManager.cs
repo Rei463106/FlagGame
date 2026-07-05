@@ -22,7 +22,7 @@ public class CommentManager : MonoBehaviour
         else if (s._combo > 1)
             SetSpriteComment(_comment.Sprite[Random.Range(0, _comment.Sprite.Length)], $"{s._combo}コンボ!{_comment.ComboComment[Random.Range(0, _comment.ComboComment.Length)]}");
         else if (s._line > 0)
-            SetSpriteComment(_comment.Sprite[Random.Range(0, _comment.Sprite.Length)], $"{s._line}列消し!{_comment.DeleteComment}");
+            SetSpriteComment(_comment.Sprite[Random.Range(0, _comment.Sprite.Length)], $"{s._line}列消し!{_comment.DeleteComment[Random.Range(0, _comment.DeleteComment.Length)]}");
     }
 
     private void SetSpriteComment(Sprite sprite, string text)

@@ -13,8 +13,10 @@ MonoBehaviour:
   m_Name: Comment
   m_EditorClassIdentifier: Assembly-CSharp::Comment
   _sprite:
-  - {fileID: 0}
-  _specialSprite: {fileID: 0}
+  - {fileID: 21300000, guid: afc686024f27e3844ab7c5c7f31c991e, type: 3}
+  - {fileID: 21300000, guid: 9e0c75f575b13dc48a7e6017eb326ec0, type: 3}
+  - {fileID: 21300000, guid: 97a0049e479fa1d4c95703db2c673679, type: 3}
+  _specialSprite: {fileID: 21300000, guid: 28e6e404f3b758944906a5f8e4f43cb3, type: 3}
   _comboComment:
   - "\u305D\u306E\u8ABF\u5B50\uFF01"
   - "\u304B\u306A\u308A\u826F\u3044\u3088\uFF01"

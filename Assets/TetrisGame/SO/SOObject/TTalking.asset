@@ -15,19 +15,19 @@ MonoBehaviour:
   _settings:
   - _talkType: 0
     _con:
-    - _sprite: {fileID: 0}
+    - _sprite: {fileID: 21300000, guid: afc686024f27e3844ab7c5c7f31c991e, type: 3}
       _comment: "\u306F\u3058\u3081\u307E\u3057\u3066\uFF01"
-    - _sprite: {fileID: 0}
-      _comment: "\u308F\u305F\u3057\u306F\u3000\u30E1\u30A4"
-    - _sprite: {fileID: 0}
+    - _sprite: {fileID: 21300000, guid: afc686024f27e3844ab7c5c7f31c991e, type: 3}
+      _comment: "\u308F\u305F\u3057\u306F\u3000              \u30CA\u30A4\u30F3"
+    - _sprite: {fileID: 21300000, guid: 9e0c75f575b13dc48a7e6017eb326ec0, type: 3}
       _comment: "\u3055\u3042\u4E00\u7DD2\u306B\u904A\u3073\u307E\u3057\u3087\u3046\uFF01 "
+    - _sprite: {fileID: 21300000, guid: a6ff3ee43aaaf9e4e9e2a45de907e207, type: 3}
+      _comment: 
   - _talkType: 1
     _con: []
   - _talkType: 2
     _con:
-    - _sprite: {fileID: 0}
+    - _sprite: {fileID: 21300000, guid: 9e0c75f575b13dc48a7e6017eb326ec0, type: 3}
       _comment: "\u3048\u3078\u3078\u3000\u3068\u3063\u3066\u3082\u697D\u3057\u304B\u3063\u305F\u3088\u3063\uFF01"
-    - _sprite: {fileID: 0}
-      _comment: "\u3048\u3078\u3078\u3000\u3068\u3063\u3066\u3082\u697D\u3057\u304B\u3063\u305F\u3088\u3063\uFF01"
-    - _sprite: {fileID: 0}
+    - _sprite: {fileID: 21300000, guid: afc686024f27e3844ab7c5c7f31c991e, type: 3}
       _comment: "\u307E\u305F\u826F\u3051\u308C\u3070\u308F\u305F\u3057\u3068\u904A\u3093\u3067\u306D\uFF01"
