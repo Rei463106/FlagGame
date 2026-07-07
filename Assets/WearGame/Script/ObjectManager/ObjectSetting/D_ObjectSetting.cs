@@ -1,5 +1,3 @@
-using UnityEngine;
-
 /// <summary>
 /// Cloth本体の処理を記述するところ(データ)
 /// </summary>
@@ -41,7 +39,6 @@ internal class D_ObjectSetting
     /// </summary>
     public void RevertMouse()
     {
-        EventBus.Publish<DragGiveRevertEvent>(new DragGiveRevertEvent());
         EventBus.Publish<RevertMouseEvent>(new RevertMouseEvent());
         _isComplete = true;//完了を知らせる
     }
