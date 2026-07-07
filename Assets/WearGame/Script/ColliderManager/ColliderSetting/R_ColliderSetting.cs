@@ -46,14 +46,17 @@ public class R_ColliderSetting : MonoBehaviour
             var top = _co.bounds.max.y;
 
             var mouse = Camera.main.ScreenToWorldPoint(Mouse.current.position.ReadValue());
-            Vector2 mousePos = new(mouse.x, mouse.y);
+            Vector2 m = new(mouse.x, mouse.y);
 
-            if (left <= mousePos.x && mousePos.x <= right && bottom <= mousePos.y && mousePos.y <= top)
+            if (left <= m.x && m.x <= right && bottom <= m.y && m.y <= top)
             {
                 _sp.sprite = _myItem.Sprite;
-                _oldSprite = _sp.sprite;
                 EventBus.Publish<ObjectInsideEvent>(new ObjectInsideEvent());
             }
+            else
+                _sp.sprite = _oldSprite;
+
+            _oldSprite = _sp.sprite;
         }
     }
 
