@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: c4289c0ac590eff4fbecd2011b3aa751
+guid: 280269313b5ba1449875a7deb9bda3e6
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -8989112606082109589
-    second: ribbon_straw-hat_17428_0
+      213: 9049393202085356481
+    second: "\u7121\u984C391_20260708230234_0"
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -48,10 +48,10 @@ TextureImporter:
   compressionQuality: 50
   spriteMode: 1
   spriteExtrude: 1
-  spriteMeshType: 1
+  spriteMeshType: 0
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 500
+  spritePixelsToUnits: 100
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -96,17 +96,30 @@ TextureImporter:
     ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: ribbon_straw-hat_17428_0
+      name: "\u7121\u984C391_20260708230234_0"
       rect:
         serializedVersion: 2
-        x: 36
-        y: 76
-        width: 703
-        height: 426
+        x: 0
+        y: 0
+        width: 500
+        height: 490
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -115,8 +128,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: b6f6d7c06b1404380800000000000000
-      internalID: -8989112606082109589
+      spriteID: 1c3e12beb27e59d70800000000000000
+      internalID: 9049393202085356481
       vertices: []
       indices: 
       edges: []
@@ -135,7 +148,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      ribbon_straw-hat_17428_0: -8989112606082109589
+      "\u7121\u984C391_20260708230234_0": 9049393202085356481
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

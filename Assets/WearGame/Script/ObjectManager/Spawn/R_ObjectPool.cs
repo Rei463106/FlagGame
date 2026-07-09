@@ -17,7 +17,7 @@ public class R_ObjectPool : MonoBehaviour
 
     private ObjectPool<GameObject> _pool;
     private GameObject _currentObject;
-    private CancellationTokenSource _source = new CancellationTokenSource();
+    private CancellationTokenSource _source = new();
     private CancellationToken _token;
 
     private void OnEnable()

@@ -15,5 +15,5 @@ MonoBehaviour:
   _name: "\u4E09\u89D2"
   _parts: 0
   _sprite: {fileID: 21300000, guid: 2e42c526d926ef94798239d75cd447e1, type: 3}
-  _deathflag: 0
-  _expect: 
+  _deathflag: 1
+  _expect: "\u30EF\u30BF\u30AF\u30B7\u306E\u4EBA\u5F62\u306B\u5E7D\u970A\u306E\u4EE3\u540D\u8A5E\u307F\u305F\u3044\u306A\u3082\u306E\u3064\u3051\u306A\u3044\u3067\u3061\u3087\u3046\u3060\u3044"
