@@ -2,6 +2,7 @@ using Cysharp.Threading.Tasks;
 using System;
 using System.Threading;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -11,32 +12,24 @@ using UnityEngine.UI;
 /// </summary>
 public class L_GameOver : MonoBehaviour
 {
+    [Header("SpriteRenderer")]
+    [SerializeField] private SpriteRenderer _sp;
+    [Header("Sprite")]
+    [SerializeField] private Sprite _mutu;
     [Header("ゲームオーバー時の背景")]
-    [SerializeField] private Image _image;
+    [SerializeField] private SpriteRenderer _gSp;
     [Header("死亡理由")]
     [SerializeField] private Text _text;
-    [Header("Canvas")]
-    [SerializeField] private Canvas _canvas;
+    [Header("妨害")]
+    [SerializeField] private Physics2DRaycaster _phy;
 
     private CancellationTokenSource _source;
     private CancellationToken _token;
     private string _message;
 
-    private void OnEnable()
-    {
-        EventBus.Subscribe<GameOverEvent>(this, RecieveGameOver);
-    }
+    private void OnEnable() => EventBus.Subscribe<GameOverEvent>(this, RecieveGameOver);
 
-    private void OnDisable()
-    {
-        EventBus.AllUnSubscribe(this);
-    }
-
-    private void Start()
-    {
-        _image.enabled = false;
-        _text.text = null;
-    }
+    private void OnDisable() => EventBus.AllUnSubscribe(this);
 
     private void RecieveGameOver(GameOverEvent g)
     {
@@ -48,14 +41,19 @@ public class L_GameOver : MonoBehaviour
 
     private async UniTask GameOverDirection(CancellationToken c)
     {
-        //何かアニメーションが入るかもしれない
-        _canvas.sortingOrder = 10000;    
-        _image.enabled = true;
-
+        _phy.enabled = false;
+        _sp.sprite = _mutu;
+        await UniTask.Delay(TimeSpan.FromSeconds(1f));
+        _gSp.enabled = true;
         await UniTask.Delay(TimeSpan.FromSeconds(1f), cancellationToken: c);
 
-        _text.text = _message;
+        foreach (var m in _message.ToCharArray())
+        {
+            _text.text += m;
+            await UniTask.Delay(TimeSpan.FromSeconds(0.1f));
+        }
 
+        _phy.enabled = true;
         await UniTask.WaitUntil(() => Mouse.current.leftButton.wasPressedThisFrame, cancellationToken: c);
 
         SceneManager.LoadScene("WearGameScene");

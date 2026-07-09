@@ -1,47 +1,38 @@
 using Cysharp.Threading.Tasks;
 using System;
-using System.Threading;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 public class L_GameCorrect : MonoBehaviour
 {
-    [Header("Canvas")]
-    [SerializeField] private Canvas _canvas;
-    [Header("妨害Image")]
-    [SerializeField] private Image _image;
+    [Header("SpriteRenderer")]
+    [SerializeField] private SpriteRenderer _sp;
+    [Header("Sprite")]
+    [SerializeField] private Sprite _normal;
+    [Header("Sprite")]
+    [SerializeField] private Sprite _niko;
+    [Header("時報テキスト")]
+    [SerializeField] private Text _sText;
+    [Header("妨害")]
+    [SerializeField] private Physics2DRaycaster _phy;
 
-    private CancellationTokenSource _source;
-    private CancellationToken _token;
+    private void OnEnable() => EventBus.Subscribe<CorrectEvent>(this, ReceiveCorrect);
 
-    private void OnEnable()
+    private void OnDisable() => EventBus.AllUnSubscribe(this);
+
+    private void ReceiveCorrect(CorrectEvent c) => CorrectTask().Forget();
+
+    private async UniTask CorrectTask()
     {
-        EventBus.Subscribe<CorrectEvent>(this, ReceiveCorrect);
+        _phy.enabled = false;
+        _sp.sprite = _niko;
+        _sText.color = Color.blue;
+        _sText.text = "Correct!!!";
+        await UniTask.Delay(TimeSpan.FromSeconds(2f));
+        _sp.sprite = _normal;
+        _sText.text = "";
+        _phy.enabled = true;
     }
 
-    private void OnDisable()
-    {
-        EventBus.AllUnSubscribe(this);
-    }
-
-    private void ReceiveCorrect(CorrectEvent c)
-    {
-        _source = new CancellationTokenSource();
-        _token = _source.Token;
-        CorrectTask(_token).Forget();
-    }
-
-    private async UniTask CorrectTask(CancellationToken token)
-    {
-        _image.enabled = true;
-        _canvas.sortingOrder = 10000;
-
-        await UniTask.Delay(TimeSpan.FromSeconds(2));
-
-        _image.enabled = false;
-        _canvas.sortingOrder = -1000;
-
-        Debug.Log("正解！！");
-    }
-   
 }

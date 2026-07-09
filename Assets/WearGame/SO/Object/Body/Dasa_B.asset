@@ -15,5 +15,5 @@ MonoBehaviour:
   _name: "\u3060\u3055T"
   _parts: 1
   _sprite: {fileID: 21300000, guid: 821907dffc7f2644f92b7ddcd12c1fc3, type: 3}
-  _deathflag: 0
-  _expect: 
+  _deathflag: 1
+  _expect: "\u30EF\u30BF\u30AF\u30B7\u306E\u30BB\u30F3\u30B9\u304B\u3089\u898B\u30660\u70B9\u306E\u670D\u306D\u3002"

@@ -1,3 +1,5 @@
+using Cysharp.Threading.Tasks;
+using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -60,11 +62,14 @@ public class R_ColliderSetting : MonoBehaviour
         }
     }
 
-    private void ReceiveCorrect(CorrectEvent c)
+    private async UniTask CorrectEvent()
     {
+        await UniTask.Delay(TimeSpan.FromSeconds(2f));
         _oldSprite = null;
         _sp.sprite = null;
     }
+
+    private void ReceiveCorrect(CorrectEvent c) => CorrectEvent().Forget();
 
     private void ReceiveDustBox(DustBoxEvent d)
     {
