@@ -13,6 +13,7 @@ public class ScoreManager : MonoBehaviour
 
     private int _addScore;
     private int _score;
+    public static int _finalScore;
 
     private void OnEnable() => EventBus.Subscribe<SendScoreEvent>(this, ReceiveDeleteInfo);
 
@@ -26,6 +27,7 @@ public class ScoreManager : MonoBehaviour
     {
         _addScore = fix * (line + combo);
         _score += _addScore;
+        _finalScore = _score;
     }
 
     private void ScoreDirection()

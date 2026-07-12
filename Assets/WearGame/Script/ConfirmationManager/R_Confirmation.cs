@@ -1,4 +1,3 @@
-using Cysharp.Threading.Tasks;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -6,8 +5,8 @@ using UnityEngine;
 
 public class R_Confirmation : MonoBehaviour
 {
-    private Dictionary<Parts, ClothItem> _receiveDic = new Dictionary<Parts, ClothItem>();//お手本を入れる
-    private Dictionary<Parts, ClothItem> _comfirmationDic = new Dictionary<Parts, ClothItem>();//現状を入れる
+    private Dictionary<Parts, ClothItem> _receiveDic = new();//お手本を入れる
+    private Dictionary<Parts, ClothItem> _comfirmationDic = new();//現状を入れる
 
     private ClothItem _receive;
 
@@ -17,6 +16,7 @@ public class R_Confirmation : MonoBehaviour
         EventBus.Subscribe<ObjectInsideEvent>(this, ReceiveInside);
         EventBus.Subscribe<ModelChangeEvent>(this, ReceiveModel);
         EventBus.Subscribe<DustBoxEvent>(this, ReceiveDustBox);
+        EventBus.Subscribe<GameOverEvent>(this, ReceiveGameOver);
     }
 
     private void OnDisable()
@@ -51,7 +51,7 @@ public class R_Confirmation : MonoBehaviour
                 continue;
         }
 
-        if (correct)
+        if (correct && !_isOver)
         {
             EventBus.Publish<CorrectEvent>(new CorrectEvent());
 
@@ -60,6 +60,11 @@ public class R_Confirmation : MonoBehaviour
                 _comfirmationDic[i] = null;
         }
     }
+
+
+    private bool _isOver = false;
+
+    private void ReceiveGameOver(GameOverEvent g) => _isOver = true;
 
     private void ReceiveDustBox(DustBoxEvent d)
     {

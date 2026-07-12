@@ -1519,6 +1519,8 @@ MonoBehaviour:
   _clip: {fileID: 8300000, guid: 5b22572f64454b1428e3b39708bb9128, type: 3}
   _source: {fileID: 374397761}
   _fadeImage: {fileID: 1086646384}
+  _cFlag: {fileID: 11400000, guid: e0c285db29561e9448966171f71261fd, type: 2}
+  _score: {fileID: 11400000, guid: b6f50bc8dc373934ebe52670031d3cdd, type: 2}
 --- !u!82 &374397761
 AudioSource:
   m_ObjectHideFlags: 0
@@ -3632,7 +3634,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!212 &1086646384
 SpriteRenderer:
   serializedVersion: 2

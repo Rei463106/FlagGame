@@ -7545,6 +7545,8 @@ MonoBehaviour:
   _sText: {fileID: 382107711}
   _phy: {fileID: 519420033}
   _clip: {fileID: 8300000, guid: b3ee3a1316cabf9458380fc796074010, type: 3}
+  _cFlag: {fileID: 11400000, guid: 40db3278bdbead346be9ceebb496e4da, type: 2}
+  _score: {fileID: 11400000, guid: c1b1700c9429cf0468b7dcacdc03c351, type: 2}
 --- !u!82 &1722033793
 AudioSource:
   m_ObjectHideFlags: 0

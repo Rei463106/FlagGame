@@ -1,8 +1,15 @@
 using Cysharp.Threading.Tasks;
 using System;
+using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class FinishManager : FinishDirection, IStateEvent
 {
+    [Header("クリアSO")]
+    [SerializeField] private ClearFlag _cFlag;
+    [Header("スコア")]
+    [SerializeField] private MiniGameScore _score;
+
     public StateEnum State => StateEnum.Finish;
 
     public event Action<StateEnum> StateChanged;
@@ -15,6 +22,13 @@ public class FinishManager : FinishDirection, IStateEvent
     {
         Direction();
         await UniTask.WaitUntil(() => _isFinish);
-        //画面暗転するなりなんなり
+        if (_cFlag.Flag == ClearFlags.None)
+            _cFlag.ChangeFlag(ClearFlags.Clear);
+        else if (_cFlag.Flag == ClearFlags.Clear)
+            _cFlag.ChangeFlag(ClearFlags.Second);
+
+        _score.ChangeScore(ScoreManager._finalScore);
+
+        SceneManager.LoadScene("StageSelect");
     }
 }

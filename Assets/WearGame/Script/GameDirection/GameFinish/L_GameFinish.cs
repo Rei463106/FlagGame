@@ -28,6 +28,10 @@ public class L_GameFinish : MonoBehaviour
     [SerializeField] private Physics2DRaycaster _phy;
     [Header("フィニッシュ音")]
     [SerializeField] private AudioClip _clip;
+    [Header("クリアSO")]
+    [SerializeField] private ClearFlag _cFlag;
+    [Header("スコア")]
+    [SerializeField] private MiniGameScore _score;
 
     private CancellationTokenSource _source;
     private CancellationToken _token;
@@ -81,6 +85,13 @@ public class L_GameFinish : MonoBehaviour
         _faceSp.enabled = false;
         Tween tween2 = _fadeSp.DOFade(1f, 2f);
         await tween2.AsyncWaitForCompletion();
-        SceneManager.LoadScene("");
+
+        if (_cFlag.Flag == ClearFlags.None)
+            _cFlag.ChangeFlag(ClearFlags.Clear);
+        else if (_cFlag.Flag == ClearFlags.Clear)
+            _cFlag.ChangeFlag(ClearFlags.Second);
+
+        _score.ChangeScore(HaveScore.Score);
+        SceneManager.LoadScene("StageSelect");
     }
 }
