@@ -3,6 +3,8 @@ using UnityEngine.UI;
 
 public class Buttons : MonoBehaviour
 {
+    [Header("GameObject")]
+    [SerializeField] private GameObject _obj;
     [Header("Image")]
     [SerializeField] private Image _buttonImage;
     [Header("RectTransform")]
@@ -23,4 +25,7 @@ public class Buttons : MonoBehaviour
         _rectTransform.sizeDelta = new Vector2(width, height);
         _text.fontSize = fontsize;
     }
+
+    public void DestroyObj() => Destroy(_obj);
+
 }

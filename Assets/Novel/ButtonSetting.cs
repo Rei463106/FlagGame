@@ -4,7 +4,7 @@ using UnityEngine;
 [Serializable]
 public struct ButtonSetting
 {
-    [Header("NActBase")]
+    [Header("選択肢後の会話")]
     [SerializeField] private NActBase[] _actBase;
     [Header("好感度")]
     [SerializeField] private int _love;
