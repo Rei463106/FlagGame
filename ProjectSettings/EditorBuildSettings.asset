@@ -8,12 +8,15 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/Scenes/SampleScene.unity
     guid: 8c9cfa26abfee488c85f1582747f6a02
-  - enabled: 0
+  - enabled: 1
     path: Assets/Scenes/WearGameScene.unity
     guid: 454437342ec07794a9e7b090f7aaf759
   - enabled: 1
     path: Assets/Scenes/Tetris.unity
     guid: e0fdb4b5304cc734ea3fd090abc5de1a
+  - enabled: 1
+    path: Assets/Scenes/StageSelect.unity
+    guid: c9a2023422d0d454ca19e6e63500b681
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 0402625a027c11941b9ba2a56223de66, type: 3}
   m_UseUCBPForAssetBundles: 0
