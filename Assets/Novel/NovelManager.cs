@@ -1,7 +1,9 @@
 using Cysharp.Threading.Tasks;
 using DG.Tweening;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 /// <summary>
 /// ノベル部分のまとめ役
@@ -9,11 +11,11 @@ using UnityEngine;
 public class NovelManager : MonoBehaviour
 {
     [Header("ActBaseズ")]
-    [SerializeField] private MonoBehaviour[] _actBases;
+    [SerializeField] private List<MonoBehaviour> _actBases;
     [Header("FadePanel")]
     [SerializeField] private SpriteRenderer _sp;
 
-    private IActBase[] ActBase => (IActBase[])_actBases;
+    private IActBase[] ActBase => _actBases.OfType<IActBase>().ToArray();
 
     Queue<IActBase> _actQueue = new();
 
@@ -24,7 +26,7 @@ public class NovelManager : MonoBehaviour
 
     private async UniTask ExecuteAct()
     {
-        Tween tween = _sp.DOFade(0f, 3f);
+        Tween tween = _sp.DOFade(0.5f, 3f);
         await tween.AsyncWaitForCompletion();
 
         foreach (var act in ActBase)
@@ -39,6 +41,7 @@ public class NovelManager : MonoBehaviour
 
         Tween tween2 = _sp.DOFade(1f, 3f);
         await tween2.AsyncWaitForCompletion();
+        SceneManager.LoadScene("StageSelect");
     }
 
     private void ReceiveNAct(NActSendEvent n)

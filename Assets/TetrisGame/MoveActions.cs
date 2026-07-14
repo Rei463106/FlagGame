@@ -323,6 +323,74 @@ public partial class @MoveActions: IInputActionCollection2, IDisposable
                     ""isPartOfComposite"": false
                 }
             ]
+        },
+        {
+            ""name"": ""NovelMove"",
+            ""id"": ""17bdbf30-32f5-4c4b-a221-36562235bbad"",
+            ""actions"": [
+                {
+                    ""name"": ""Push"",
+                    ""type"": ""Button"",
+                    ""id"": ""9101bc64-58e0-408b-9ee2-d5a46e87b485"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Up"",
+                    ""type"": ""Button"",
+                    ""id"": ""ef77ede9-450f-4e9d-86eb-6dc3288a92f8"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Down"",
+                    ""type"": ""Button"",
+                    ""id"": ""f5b8f1e8-77ad-4635-9492-0b2d08893616"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""061ba8d9-2c00-42a9-aefc-b06b8b8fd203"",
+                    ""path"": ""<Keyboard>/z"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Push"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""8f556a0d-d2d6-49a0-8ec1-26ec5d807e0d"",
+                    ""path"": ""<Keyboard>/w"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Up"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""05f8d756-34a7-44cf-9c82-40c609991796"",
+                    ""path"": ""<Keyboard>/s"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Down"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
         }
     ],
     ""controlSchemes"": []
@@ -342,12 +410,18 @@ public partial class @MoveActions: IInputActionCollection2, IDisposable
         m_MenuMove_Up = m_MenuMove.FindAction("Up", throwIfNotFound: true);
         m_MenuMove_Down = m_MenuMove.FindAction("Down", throwIfNotFound: true);
         m_MenuMove_Decision = m_MenuMove.FindAction("Decision", throwIfNotFound: true);
+        // NovelMove
+        m_NovelMove = asset.FindActionMap("NovelMove", throwIfNotFound: true);
+        m_NovelMove_Push = m_NovelMove.FindAction("Push", throwIfNotFound: true);
+        m_NovelMove_Up = m_NovelMove.FindAction("Up", throwIfNotFound: true);
+        m_NovelMove_Down = m_NovelMove.FindAction("Down", throwIfNotFound: true);
     }
 
     ~@MoveActions()
     {
         UnityEngine.Debug.Assert(!m_InputMove.enabled, "This will cause a leak and performance issues, MoveActions.InputMove.Disable() has not been called.");
         UnityEngine.Debug.Assert(!m_MenuMove.enabled, "This will cause a leak and performance issues, MoveActions.MenuMove.Disable() has not been called.");
+        UnityEngine.Debug.Assert(!m_NovelMove.enabled, "This will cause a leak and performance issues, MoveActions.NovelMove.Disable() has not been called.");
     }
 
     /// <summary>
@@ -710,6 +784,124 @@ public partial class @MoveActions: IInputActionCollection2, IDisposable
     /// Provides a new <see cref="MenuMoveActions" /> instance referencing this action map.
     /// </summary>
     public MenuMoveActions @MenuMove => new MenuMoveActions(this);
+
+    // NovelMove
+    private readonly InputActionMap m_NovelMove;
+    private List<INovelMoveActions> m_NovelMoveActionsCallbackInterfaces = new List<INovelMoveActions>();
+    private readonly InputAction m_NovelMove_Push;
+    private readonly InputAction m_NovelMove_Up;
+    private readonly InputAction m_NovelMove_Down;
+    /// <summary>
+    /// Provides access to input actions defined in input action map "NovelMove".
+    /// </summary>
+    public struct NovelMoveActions
+    {
+        private @MoveActions m_Wrapper;
+
+        /// <summary>
+        /// Construct a new instance of the input action map wrapper class.
+        /// </summary>
+        public NovelMoveActions(@MoveActions wrapper) { m_Wrapper = wrapper; }
+        /// <summary>
+        /// Provides access to the underlying input action "NovelMove/Push".
+        /// </summary>
+        public InputAction @Push => m_Wrapper.m_NovelMove_Push;
+        /// <summary>
+        /// Provides access to the underlying input action "NovelMove/Up".
+        /// </summary>
+        public InputAction @Up => m_Wrapper.m_NovelMove_Up;
+        /// <summary>
+        /// Provides access to the underlying input action "NovelMove/Down".
+        /// </summary>
+        public InputAction @Down => m_Wrapper.m_NovelMove_Down;
+        /// <summary>
+        /// Provides access to the underlying input action map instance.
+        /// </summary>
+        public InputActionMap Get() { return m_Wrapper.m_NovelMove; }
+        /// <inheritdoc cref="UnityEngine.InputSystem.InputActionMap.Enable()" />
+        public void Enable() { Get().Enable(); }
+        /// <inheritdoc cref="UnityEngine.InputSystem.InputActionMap.Disable()" />
+        public void Disable() { Get().Disable(); }
+        /// <inheritdoc cref="UnityEngine.InputSystem.InputActionMap.enabled" />
+        public bool enabled => Get().enabled;
+        /// <summary>
+        /// Implicitly converts an <see ref="NovelMoveActions" /> to an <see ref="InputActionMap" /> instance.
+        /// </summary>
+        public static implicit operator InputActionMap(NovelMoveActions set) { return set.Get(); }
+        /// <summary>
+        /// Adds <see cref="InputAction.started"/>, <see cref="InputAction.performed"/> and <see cref="InputAction.canceled"/> callbacks provided via <param cref="instance" /> on all input actions contained in this map.
+        /// </summary>
+        /// <param name="instance">Callback instance.</param>
+        /// <remarks>
+        /// If <paramref name="instance" /> is <c>null</c> or <paramref name="instance"/> have already been added this method does nothing.
+        /// </remarks>
+        /// <seealso cref="NovelMoveActions" />
+        public void AddCallbacks(INovelMoveActions instance)
+        {
+            if (instance == null || m_Wrapper.m_NovelMoveActionsCallbackInterfaces.Contains(instance)) return;
+            m_Wrapper.m_NovelMoveActionsCallbackInterfaces.Add(instance);
+            @Push.started += instance.OnPush;
+            @Push.performed += instance.OnPush;
+            @Push.canceled += instance.OnPush;
+            @Up.started += instance.OnUp;
+            @Up.performed += instance.OnUp;
+            @Up.canceled += instance.OnUp;
+            @Down.started += instance.OnDown;
+            @Down.performed += instance.OnDown;
+            @Down.canceled += instance.OnDown;
+        }
+
+        /// <summary>
+        /// Removes <see cref="InputAction.started"/>, <see cref="InputAction.performed"/> and <see cref="InputAction.canceled"/> callbacks provided via <param cref="instance" /> on all input actions contained in this map.
+        /// </summary>
+        /// <remarks>
+        /// Calling this method when <paramref name="instance" /> have not previously been registered has no side-effects.
+        /// </remarks>
+        /// <seealso cref="NovelMoveActions" />
+        private void UnregisterCallbacks(INovelMoveActions instance)
+        {
+            @Push.started -= instance.OnPush;
+            @Push.performed -= instance.OnPush;
+            @Push.canceled -= instance.OnPush;
+            @Up.started -= instance.OnUp;
+            @Up.performed -= instance.OnUp;
+            @Up.canceled -= instance.OnUp;
+            @Down.started -= instance.OnDown;
+            @Down.performed -= instance.OnDown;
+            @Down.canceled -= instance.OnDown;
+        }
+
+        /// <summary>
+        /// Unregisters <param cref="instance" /> and unregisters all input action callbacks via <see cref="NovelMoveActions.UnregisterCallbacks(INovelMoveActions)" />.
+        /// </summary>
+        /// <seealso cref="NovelMoveActions.UnregisterCallbacks(INovelMoveActions)" />
+        public void RemoveCallbacks(INovelMoveActions instance)
+        {
+            if (m_Wrapper.m_NovelMoveActionsCallbackInterfaces.Remove(instance))
+                UnregisterCallbacks(instance);
+        }
+
+        /// <summary>
+        /// Replaces all existing callback instances and previously registered input action callbacks associated with them with callbacks provided via <param cref="instance" />.
+        /// </summary>
+        /// <remarks>
+        /// If <paramref name="instance" /> is <c>null</c>, calling this method will only unregister all existing callbacks but not register any new callbacks.
+        /// </remarks>
+        /// <seealso cref="NovelMoveActions.AddCallbacks(INovelMoveActions)" />
+        /// <seealso cref="NovelMoveActions.RemoveCallbacks(INovelMoveActions)" />
+        /// <seealso cref="NovelMoveActions.UnregisterCallbacks(INovelMoveActions)" />
+        public void SetCallbacks(INovelMoveActions instance)
+        {
+            foreach (var item in m_Wrapper.m_NovelMoveActionsCallbackInterfaces)
+                UnregisterCallbacks(item);
+            m_Wrapper.m_NovelMoveActionsCallbackInterfaces.Clear();
+            AddCallbacks(instance);
+        }
+    }
+    /// <summary>
+    /// Provides a new <see cref="NovelMoveActions" /> instance referencing this action map.
+    /// </summary>
+    public NovelMoveActions @NovelMove => new NovelMoveActions(this);
     /// <summary>
     /// Interface to implement callback methods for all input action callbacks associated with input actions defined by "InputMove" which allows adding and removing callbacks.
     /// </summary>
@@ -802,5 +994,34 @@ public partial class @MoveActions: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnDecision(InputAction.CallbackContext context);
+    }
+    /// <summary>
+    /// Interface to implement callback methods for all input action callbacks associated with input actions defined by "NovelMove" which allows adding and removing callbacks.
+    /// </summary>
+    /// <seealso cref="NovelMoveActions.AddCallbacks(INovelMoveActions)" />
+    /// <seealso cref="NovelMoveActions.RemoveCallbacks(INovelMoveActions)" />
+    public interface INovelMoveActions
+    {
+        /// <summary>
+        /// Method invoked when associated input action "Push" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnPush(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "Up" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnUp(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "Down" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnDown(InputAction.CallbackContext context);
     }
 }

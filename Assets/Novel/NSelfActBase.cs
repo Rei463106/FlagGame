@@ -29,7 +29,7 @@ public class NSelfActBase : MonoBehaviour, INNovelEvent
     public void DestroyObj()
     {
         _cts.Cancel();
-        Destroy(_current);
+        _current.DestroyObj();
     }
 
     protected virtual UniTask Direction(CharacterObj c, CancellationToken token)

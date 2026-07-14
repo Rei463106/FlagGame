@@ -29,9 +29,13 @@ public class NActBase : MonoBehaviour, IActBase
 
     private void OnPush(InputAction.CallbackContext c)
     {
-        if (_count == 0)
+        if (_count < 2 && !_isFinish)
+        {
             _source.Cancel();
-        _count++;
+            _count++;
+        }
+        else if (_isFinish)
+            _count = 2;
     }
 
     public void ConnectAct()
@@ -41,6 +45,8 @@ public class NActBase : MonoBehaviour, IActBase
             i.Execute();
         SetText().Forget();
     }
+
+    private bool _isFinish;
 
     private async UniTask SetText()
     {
@@ -55,6 +61,7 @@ public class NActBase : MonoBehaviour, IActBase
                 _text.text += i.ToString();
                 await UniTask.Delay(TimeSpan.FromSeconds(TextTime()), cancellationToken: _source.Token);
             }
+            _isFinish = true;
         }
         catch (OperationCanceledException)
         {
@@ -70,5 +77,5 @@ public class NActBase : MonoBehaviour, IActBase
         }
     }
 
-    protected virtual float TextTime() => 1f;
+    protected virtual float TextTime() => 0.1f;
 }

@@ -237,6 +237,74 @@
                     "isPartOfComposite": false
                 }
             ]
+        },
+        {
+            "name": "NovelMove",
+            "id": "17bdbf30-32f5-4c4b-a221-36562235bbad",
+            "actions": [
+                {
+                    "name": "Push",
+                    "type": "Button",
+                    "id": "9101bc64-58e0-408b-9ee2-d5a46e87b485",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Up",
+                    "type": "Button",
+                    "id": "ef77ede9-450f-4e9d-86eb-6dc3288a92f8",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Down",
+                    "type": "Button",
+                    "id": "f5b8f1e8-77ad-4635-9492-0b2d08893616",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "061ba8d9-2c00-42a9-aefc-b06b8b8fd203",
+                    "path": "<Keyboard>/z",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Push",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "8f556a0d-d2d6-49a0-8ec1-26ec5d807e0d",
+                    "path": "<Keyboard>/w",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Up",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "05f8d756-34a7-44cf-9c82-40c609991796",
+                    "path": "<Keyboard>/s",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Down",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
         }
     ],
     "controlSchemes": []
