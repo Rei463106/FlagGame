@@ -9,8 +9,6 @@ public class MenuResult : MonoBehaviour
 
     private void OnDisable() => EventBus.AllUnSubscribe(this);
 
-
-
     private void ReceiveLine(SendLine s)
     {
         _ren = s._renderer;

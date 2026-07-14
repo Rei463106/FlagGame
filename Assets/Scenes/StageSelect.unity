@@ -291,7 +291,7 @@ MonoBehaviour:
     CustomLookAtTarget: 0
   Lens:
     FieldOfView: 40
-    OrthographicSize: 2.5
+    OrthographicSize: 2.7
     NearClipPlane: 0.1
     FarClipPlane: 5000
     Dutch: 0
@@ -1353,6 +1353,10 @@ PrefabInstance:
       value: 1.28
       objectReference: {fileID: 0}
     - target: {fileID: 1294820975729277990, guid: 68ab5cd4b2172a849b0d9791d1c6d2aa, type: 3}
+      propertyPath: _sp
+      value: 
+      objectReference: {fileID: 1507796284}
+    - target: {fileID: 1294820975729277990, guid: 68ab5cd4b2172a849b0d9791d1c6d2aa, type: 3}
       propertyPath: _playerI
       value: 
       objectReference: {fileID: 1126674567}
@@ -1560,7 +1564,7 @@ Camera:
   far clip plane: 5000
   field of view: 40
   orthographic: 1
-  orthographic size: 2.5
+  orthographic size: 2.7
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
