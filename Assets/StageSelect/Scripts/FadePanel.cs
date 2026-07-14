@@ -14,5 +14,4 @@ public class FadePanel : MonoBehaviour
         Tween tween = _sp.DOFade(a, time);
         await tween.AsyncWaitForCompletion();
     }
-
 }
